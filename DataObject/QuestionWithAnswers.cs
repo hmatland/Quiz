@@ -8,8 +8,8 @@ namespace DataObject
 {
     public class QuestionWithAnswers
     {
-        public long ID { get; set; }
-        public string questionText { get; set; }
-        public List<Answer> answers { get; set; }
+        public long Id { get; set; }
+        public string QuestionText { get; set; }
+        public List<Answer> Answers { get; set; }
     }
 }

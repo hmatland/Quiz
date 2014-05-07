@@ -16,7 +16,7 @@ namespace Presentation
             if (!IsPostBack)
             {
                 var questionWithAnswers = GameMaster.GetQuestionWithAnswers();
-                QuestionText = questionWithAnswers.questionText;
+                QuestionText = questionWithAnswers.QuestionText;
                 FillInQuestionAndAnswers(questionWithAnswers);
             }
             
@@ -24,21 +24,21 @@ namespace Presentation
 
         protected void FillInQuestionAndAnswers(QuestionWithAnswers questionWithAnswers)
         {
-            Question.Text = questionWithAnswers.questionText;
+            Question.Text = questionWithAnswers.QuestionText;
 
-            var answer1 = questionWithAnswers.answers.ElementAt(0);
+            var answer1 = questionWithAnswers.Answers.ElementAt(0);
             Answer1.Text = answer1.answerText;
             Answer1.CommandArgument = answer1.ID.ToString(CultureInfo.InvariantCulture);
 
-            var answer2 = questionWithAnswers.answers.ElementAt(1);
+            var answer2 = questionWithAnswers.Answers.ElementAt(1);
             Answer2.Text = answer2.answerText;
             Answer2.CommandArgument = answer2.ID.ToString(CultureInfo.InvariantCulture);
 
-            var answer3 = questionWithAnswers.answers.ElementAt(2);
+            var answer3 = questionWithAnswers.Answers.ElementAt(2);
             Answer3.Text = answer3.answerText;
             Answer3.CommandArgument = answer3.ID.ToString(CultureInfo.InvariantCulture);
 
-            var answer4 = questionWithAnswers.answers.ElementAt(3);
+            var answer4 = questionWithAnswers.Answers.ElementAt(3);
             Answer4.Text = answer4.answerText;
             Answer4.CommandArgument = answer4.ID.ToString(CultureInfo.InvariantCulture);
 
@@ -49,7 +49,7 @@ namespace Presentation
             var answerId  = long.Parse(((Button)sender).CommandArgument);
             Information.Text = "The answer: " + ((Button)sender).Text + " is: " + GameMaster.IsAnswerCorrect(answerId).ToString();
             var questionWithAnswers = GameMaster.GetQuestionWithAnswers();
-            QuestionText = questionWithAnswers.questionText;
+            QuestionText = questionWithAnswers.QuestionText;
             FillInQuestionAndAnswers(questionWithAnswers);
         }
 
