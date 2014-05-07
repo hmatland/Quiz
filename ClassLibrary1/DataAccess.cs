@@ -21,11 +21,11 @@ namespace DataAccess
                 {
                     var answerCmd =
                         new SqlCommand(
-                            "INSERT INTO Answer (Text, IsCorrect, QuestionId) VALUES (@Text, @IsCorrect, @QuestionID)",
+                            "INSERT INTO Answer (Text, IsCorrect, QuestionId) VALUES (@Text, @IsCorrect, @QuestionId)",
                             connection);
                     answerCmd.Parameters.Add(@"Text", SqlDbType.VarChar, 250).Value = answer.answerText;
                     answerCmd.Parameters.Add(@"IsCorrect", SqlDbType.Bit).Value = answer.isCorrect;
-                    answerCmd.Parameters.Add(@"QuestionID", SqlDbType.BigInt).Value = questionId;
+                    answerCmd.Parameters.Add(@"QuestionId", SqlDbType.BigInt).Value = questionId;
                     answerCmd.Prepare();
                     answerCmd.ExecuteNonQuery();
                 }
@@ -37,14 +37,14 @@ namespace DataAccess
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var questionCmd = new SqlCommand("SELECT ID FROM Question WHERE Text = @Text",
+                var questionCmd = new SqlCommand("SELECT QuestionId FROM Question WHERE Text = @Text",
                     connection);
                 questionCmd.Parameters.Add(@"Text", SqlDbType.VarChar, 250).Value = questionText;
                 questionCmd.Prepare();
                 var reader = questionCmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    return (long) reader["ID"];
+                    return (long) reader["QuestionId"];
                 }
                 return -1;
             }
@@ -55,9 +55,10 @@ namespace DataAccess
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var questionCmd = new SqlCommand("INSERT INTO Question (Text) VALUES (@Text)",
+                var questionCmd = new SqlCommand("INSERT INTO Question (Text, QuizId) VALUES (@Text, @QuizId)",
                     connection);
                 questionCmd.Parameters.Add(@"Text", SqlDbType.VarChar, 250).Value = questionText;
+                questionCmd.Parameters.Add(@"QuizId", SqlDbType.BigInt).Value = quizId;
                 questionCmd.Prepare();
                 questionCmd.ExecuteNonQuery();
             }
@@ -100,11 +101,11 @@ namespace DataAccess
                 var reader = questionCmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    questionWithAnswers.ID = (long) reader["ID"];
+                    questionWithAnswers.Id = (long) reader["QuestionId"];
                     questionWithAnswers.QuestionText = (string) reader["Text"];
                 }
             }
-            questionWithAnswers.Answers = GetListOfAnswers(questionWithAnswers.ID);
+            questionWithAnswers.Answers = GetListOfAnswers(questionWithAnswers.Id);
             return questionWithAnswers;
         }
 
@@ -139,7 +140,7 @@ namespace DataAccess
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var questionCmd = new SqlCommand("SELECT UserId FROM User WHERE Name = @username",
+                var questionCmd = new SqlCommand("SELECT UserId FROM [User] WHERE Name = @username",
                     connection);
                 questionCmd.Parameters.Add(@"username", SqlDbType.VarChar, 50).Value = username;
                 questionCmd.Prepare();
@@ -166,19 +167,29 @@ namespace DataAccess
                 var reader = questionCmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    
-                    
-                    
-                    var answer = new Answer
+
+                    var quiz = new Quiz
                     {
-                        answerText = (string)reader["Text"],
-                        ID = (long)reader["AnswerId"],
-                        isCorrect = (Boolean)reader["IsCorrect"],
-                        questionID = (long)reader["QuestionID"]
+                        Id = (long) reader["QuizId"],
+                        MadeById = (long) reader["UserId"],
+                        Quizname = (string) reader["Name"]
                     };
-                    quizes.Add(answer);
+                    quizes.Add(quiz);
                 }
                 return quizes;
+            }
+        }
+
+        public static void AddUserNameToQuizDb(string username)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var questionCmd = new SqlCommand("INSERT INTO [User] (Name) VALUES (@Name)",
+                    connection);
+                questionCmd.Parameters.Add(@"Name", SqlDbType.VarChar, 50).Value = username;
+                questionCmd.Prepare();
+                questionCmd.ExecuteNonQuery();
             }
         }
     }

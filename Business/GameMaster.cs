@@ -47,7 +47,7 @@ namespace Business
 
         public static List<Quiz> GetQuizes(string username)
         {
-            long userId = DataAccessMachine.GetUserId(username);
+            var userId = DataAccessMachine.GetUserId(username);
             return DataAccessMachine.GetQuizes(userId);
         }
 
@@ -55,7 +55,11 @@ namespace Business
         {
             return DataAccessMachine.GetUserId(username);
         }
-    
-    
+
+
+        public static void AddUserNameToQuizDb(string userName)
+        {
+            DataAccessMachine.AddUserNameToQuizDb(userName);
+        }
     }
 }

@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-        <link id="Link1" rel="stylesheet" runat="server" href="~/Stylesheets/QuizStylesheet.css" />
+        <link rel="stylesheet" runat="server" href="~/Stylesheets/QuizStylesheet.css" />
         <title>Quizzer</title>
 </head>
 <body>
@@ -14,6 +14,8 @@
         <asp:Label ID="QuestionLabel" runat="server" Text="Enter question: "></asp:Label>
         <asp:TextBox ID="QuestionTextBox" runat="server" Width="373px"></asp:TextBox>
         <br />
+        <asp:Label ID="QuizDropDownListLabel" runat="server" Text="Add question to which quiz "></asp:Label><asp:DropDownList ID="QuizDropDownList" runat="server" DataTextField="Quizname" DataValueField="Id">
+        </asp:DropDownList>
         <br />
         <asp:Label ID="AnswerLabel1" runat="server" Text="Correct Answer:"></asp:Label>
         <asp:TextBox ID="CorrectTextBox" runat="server" Width="361px"></asp:TextBox>
@@ -28,7 +30,7 @@
         <asp:TextBox ID="WrongTextBox3" runat="server" Width="353px"></asp:TextBox>
     
         <br />
-        <asp:Button ID="SubmitButton" runat="server" Text="Add question with answers to DB" Width="319px" OnClick="SubmitQuestionWithAnswers" />
+        <asp:Button ID="SubmitButton" CssClass="buttons" runat="server" Text="Add question with answers to DB" Width="319px" OnClick="SubmitQuestionWithAnswers" />
     
     </div>
     </form>

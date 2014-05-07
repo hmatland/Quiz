@@ -13,15 +13,6 @@ namespace Presentation.MemberPages {
     public partial class AddQuestionForm {
         
         /// <summary>
-        /// Link1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlLink Link1;
-        
-        /// <summary>
         /// AddQuestionWithAnswersForm control.
         /// </summary>
         /// <remarks>
@@ -56,6 +47,24 @@ namespace Presentation.MemberPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox QuestionTextBox;
+        
+        /// <summary>
+        /// QuizDropDownListLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label QuizDropDownListLabel;
+        
+        /// <summary>
+        /// QuizDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList QuizDropDownList;
         
         /// <summary>
         /// AnswerLabel1 control.
