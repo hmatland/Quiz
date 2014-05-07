@@ -4,7 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+        <link id="Link1" rel="stylesheet" runat="server" href="~/Stylesheets/QuizStylesheet.css" />
+        <title>Quizzer</title>
 </head>
 <body>
     <form id="AddQuestionWithAnswersForm" runat="server">

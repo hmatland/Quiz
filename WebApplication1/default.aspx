@@ -2,14 +2,9 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head id="Head1" runat="server">
+    <head runat="server">
         <link id="Link1" rel="stylesheet" runat="server" href="~/Stylesheets/QuizStylesheet.css" />
         <title>Quizzer</title>
-        <style type="text/css">
-            .auto-style1 {
-                text-align: left;
-            }
-        </style>
     </head>
     <body>
         <form id="form1" runat="server">
