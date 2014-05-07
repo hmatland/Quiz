@@ -17,7 +17,7 @@ namespace DataAccess
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                foreach (Answer answer in questionWithAnswers.answers)
+                foreach (var answer in questionWithAnswers.answers)
                 {
                     var answerCmd =
                         new SqlCommand(
@@ -42,7 +42,7 @@ namespace DataAccess
                     connection);
                 questionCmd.Parameters.Add(@"Text", SqlDbType.VarChar, 250).Value = questionText;
                 questionCmd.Prepare();
-                SqlDataReader reader = questionCmd.ExecuteReader();
+                var reader = questionCmd.ExecuteReader();
                 while (reader.Read())
                 {
                     return (long) reader["ID"];
@@ -73,7 +73,7 @@ namespace DataAccess
                     connection);
                 questionCmd.Parameters.Add(@"ID", SqlDbType.BigInt).Value = answerId;
                 questionCmd.Prepare();
-                SqlDataReader reader = questionCmd.ExecuteReader();
+                var reader = questionCmd.ExecuteReader();
                 while (reader.Read())
                 {
                     var answer = new Answer
@@ -98,7 +98,7 @@ namespace DataAccess
                 var questionCmd = new SqlCommand("SELECT TOP 1 * FROM [QUTAD\\n9058729].Question ORDER BY NEWID()",
                     connection);
                 questionCmd.Prepare();
-                SqlDataReader reader = questionCmd.ExecuteReader();
+                var reader = questionCmd.ExecuteReader();
                 while (reader.Read())
                 {
                     questionWithAnswers.ID = (long) reader["ID"];
