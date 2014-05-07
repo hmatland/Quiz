@@ -13,7 +13,7 @@
     
         <h1>LoginPage
         </h1>
-        <p><asp:Login ID="Login1" runat="server">
+        <div><asp:Login ID="Login1" runat="server">
             <LayoutTemplate>
                 <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">User Name:</asp:Label>
                 <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
@@ -23,10 +23,10 @@
                 <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password" ErrorMessage="Password is required." ToolTip="Password is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator><br/>
                 <asp:CheckBox ID="RememberMe" runat="server" Text="Remember me next time." />
                 <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal><br/>
-                <asp:Button ID="LoginButton" runat="server" CssClass="buttons" CommandName="Login" Text="Log In" ValidationGroup="Login1" />
+                <asp:Button ID="LoginButton" runat="server" CssClass="buttons" CommandName="Login" Text="Log In" ValidationGroup="Login1" Width="100%" />
             </LayoutTemplate>
            </asp:Login>
-        </p>
+        </div>
         
     </div>
     </form>
