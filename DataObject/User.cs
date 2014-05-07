@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataObject
 {
-    public class Quiz
+    class User
     {
-        public long Id { get; set; }
-        public string Quizname { get; set; }
-        public long MadeById { get; set; }
+        public long ID { get; set; }
+        public string UserName { get; set; }
     }
 }
