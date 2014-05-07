@@ -36,7 +36,7 @@ namespace Business
 
         public static Boolean IsAnswerCorrect(long answerId)
         {
-            Answer answer = DataAccessMachine.GetAnswer(answerId);
+            var answer = DataAccessMachine.GetAnswer(answerId);
             return answer.isCorrect;
         }
 
@@ -44,11 +44,6 @@ namespace Business
         {
             return DataAccessMachine.AddQuestionWithAnswersToDb(questionWithAnswers);
         }
-        public static void DoNothing()
-        {
-            var x = 1;
-        }
-
     
     
     }
