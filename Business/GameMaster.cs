@@ -11,7 +11,7 @@ namespace Business
         public static QuestionWithAnswers GetQuestionWithAnswers()
         {
             var questionWithAnswer = DataAccessMachine.GetQuestionWithAnswers();
-            questionWithAnswer.answers = ShuffleAnswers(questionWithAnswer.answers);
+            questionWithAnswer.Answers = ShuffleAnswers(questionWithAnswer.Answers);
             return questionWithAnswer;
         }
 
@@ -40,9 +40,20 @@ namespace Business
             return answer.isCorrect;
         }
 
-        public static long AddQuestionWithAnswers(QuestionWithAnswers questionWithAnswers)
+        public static void AddQuestionWithAnswers(QuestionWithAnswers questionWithAnswers, long quizId)
         {
-            return DataAccessMachine.AddQuestionWithAnswersToDb(questionWithAnswers);
+            DataAccessMachine.AddQuestionWithAnswersToDb(questionWithAnswers, quizId);
+        }
+
+        public static List<Quiz> GetQuizes(string username)
+        {
+            long userId = DataAccessMachine.GetUserId(username);
+            DataAccessMachine.GetQuizes(userId);
+        }
+
+        public static long GetUserId(string username)
+        {
+            return DataAccessMachine.GetUserId(username);
         }
     
     

@@ -8,20 +8,20 @@ namespace DataAccess
 {
     public static class DataAccessMachine
     {
-        private const string ConnectionString = "Data Source=(local);Initial Catalog=Quiz;Integrated Security=SSPI";
+        private const string ConnectionString = "Data Source=(local);Initial Catalog=QuizDB;Integrated Security=SSPI";
 
-        public static long AddQuestionWithAnswersToDb(QuestionWithAnswers questionWithAnswers)
+        public static void AddQuestionWithAnswersToDb(QuestionWithAnswers questionWithAnswers, long quizId)
         {
-            AddQuestiontoDb(questionWithAnswers.questionText);
-            var questionId = GetIdOfQuestionText(questionWithAnswers.questionText);
+            AddQuestiontoDb(questionWithAnswers.QuestionText, quizId);
+            var questionId = GetIdOfQuestionText(questionWithAnswers.QuestionText);
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                foreach (var answer in questionWithAnswers.answers)
+                foreach (var answer in questionWithAnswers.Answers)
                 {
                     var answerCmd =
                         new SqlCommand(
-                            "INSERT INTO [QUTAD\\n9058729].Answer (Text, IsCorrect, QuestionID) VALUES (@Text, @IsCorrect, @QuestionID)",
+                            "INSERT INTO Answer (Text, IsCorrect, QuestionID) VALUES (@Text, @IsCorrect, @QuestionID)",
                             connection);
                     answerCmd.Parameters.Add(@"Text", SqlDbType.VarChar, 250).Value = answer.answerText;
                     answerCmd.Parameters.Add(@"IsCorrect", SqlDbType.Bit).Value = answer.isCorrect;
@@ -30,7 +30,6 @@ namespace DataAccess
                     answerCmd.ExecuteNonQuery();
                 }
             }
-            return questionId;
         }
 
         public static long GetIdOfQuestionText(string questionText)
@@ -38,7 +37,7 @@ namespace DataAccess
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var questionCmd = new SqlCommand("SELECT ID FROM [QUTAD\\n9058729].Question WHERE Text = @Text",
+                var questionCmd = new SqlCommand("SELECT ID FROM Question WHERE Text = @Text",
                     connection);
                 questionCmd.Parameters.Add(@"Text", SqlDbType.VarChar, 250).Value = questionText;
                 questionCmd.Prepare();
@@ -51,12 +50,12 @@ namespace DataAccess
             }
         }
 
-        public static void AddQuestiontoDb(string questionText)
+        public static void AddQuestiontoDb(string questionText, long quizId)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var questionCmd = new SqlCommand("INSERT INTO [QUTAD\\n9058729].Question (Text) VALUES (@Text)",
+                var questionCmd = new SqlCommand("INSERT INTO Question (Text) VALUES (@Text)",
                     connection);
                 questionCmd.Parameters.Add(@"Text", SqlDbType.VarChar, 250).Value = questionText;
                 questionCmd.Prepare();
@@ -69,7 +68,7 @@ namespace DataAccess
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var questionCmd = new SqlCommand("SELECT * FROM [QUTAD\\n9058729].Answer WHERE AnswerId = @ID",
+                var questionCmd = new SqlCommand("SELECT * FROM Answer WHERE AnswerId = @ID",
                     connection);
                 questionCmd.Parameters.Add(@"ID", SqlDbType.BigInt).Value = answerId;
                 questionCmd.Prepare();
@@ -95,17 +94,17 @@ namespace DataAccess
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var questionCmd = new SqlCommand("SELECT TOP 1 * FROM [QUTAD\\n9058729].Question ORDER BY NEWID()",
+                var questionCmd = new SqlCommand("SELECT TOP 1 * FROM Question ORDER BY NEWID()",
                     connection);
                 questionCmd.Prepare();
                 var reader = questionCmd.ExecuteReader();
                 while (reader.Read())
                 {
                     questionWithAnswers.ID = (long) reader["ID"];
-                    questionWithAnswers.questionText = (string) reader["Text"];
+                    questionWithAnswers.QuestionText = (string) reader["Text"];
                 }
             }
-            questionWithAnswers.answers = GetListOfAnswers(questionWithAnswers.ID);
+            questionWithAnswers.Answers = GetListOfAnswers(questionWithAnswers.ID);
             return questionWithAnswers;
         }
 
@@ -115,7 +114,7 @@ namespace DataAccess
             {
                 var answers = new List<Answer>();
                 connection.Open();
-                var questionCmd = new SqlCommand("SELECT * FROM [QUTAD\\n9058729].Answer WHERE QuestionID = @ID",
+                var questionCmd = new SqlCommand("SELECT * FROM Answer WHERE QuestionID = @ID",
                     connection);
                 questionCmd.Parameters.Add(@"ID", SqlDbType.BigInt).Value = id;
                 questionCmd.Prepare();
@@ -133,6 +132,25 @@ namespace DataAccess
                 }
                 return answers;
             }
+        }
+
+        public static long GetUserId(string username)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var questionCmd = new SqlCommand("SELECT UserId FROM User WHERE Name = @username",
+                    connection);
+                questionCmd.Parameters.Add(@"username", SqlDbType.VarChar, 50).Value = username;
+                questionCmd.Prepare();
+                var reader = questionCmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    return (long)reader["UserId"];
+                }
+                return -1;
+            }
+            
         }
     }
 }
