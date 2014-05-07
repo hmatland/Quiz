@@ -44,6 +44,10 @@ namespace Business
         {
             return DataAccessMachine.AddQuestionWithAnswersToDb(questionWithAnswers);
         }
+        public static void DoNothing()
+        {
+            var x = 1;
+        }
 
     
     
