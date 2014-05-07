@@ -48,7 +48,7 @@ namespace Business
         public static List<Quiz> GetQuizes(string username)
         {
             long userId = DataAccessMachine.GetUserId(username);
-            DataAccessMachine.GetQuizes(userId);
+            return DataAccessMachine.GetQuizes(userId);
         }
 
         public static long GetUserId(string username)

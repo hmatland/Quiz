@@ -21,7 +21,7 @@ namespace DataAccess
                 {
                     var answerCmd =
                         new SqlCommand(
-                            "INSERT INTO Answer (Text, IsCorrect, QuestionID) VALUES (@Text, @IsCorrect, @QuestionID)",
+                            "INSERT INTO Answer (Text, IsCorrect, QuestionId) VALUES (@Text, @IsCorrect, @QuestionID)",
                             connection);
                     answerCmd.Parameters.Add(@"Text", SqlDbType.VarChar, 250).Value = answer.answerText;
                     answerCmd.Parameters.Add(@"IsCorrect", SqlDbType.Bit).Value = answer.isCorrect;
@@ -151,6 +151,35 @@ namespace DataAccess
                 return -1;
             }
             
+        }
+
+        public static List<Quiz> GetQuizes(long userId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var quizes = new List<Quiz>();
+                connection.Open();
+                var questionCmd = new SqlCommand("SELECT * FROM Quiz WHERE UserId = @ID",
+                    connection);
+                questionCmd.Parameters.Add(@"ID", SqlDbType.BigInt).Value = userId;
+                questionCmd.Prepare();
+                var reader = questionCmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    
+                    
+                    
+                    var answer = new Answer
+                    {
+                        answerText = (string)reader["Text"],
+                        ID = (long)reader["AnswerId"],
+                        isCorrect = (Boolean)reader["IsCorrect"],
+                        questionID = (long)reader["QuestionID"]
+                    };
+                    quizes.Add(answer);
+                }
+                return quizes;
+            }
         }
     }
 }
