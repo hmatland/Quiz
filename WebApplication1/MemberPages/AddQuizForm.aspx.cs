@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using DataObject;
 using Business;
+using System.Web.Security;
 
 
 namespace Presentation.MemberPages
@@ -19,8 +20,15 @@ namespace Presentation.MemberPages
 
         protected void SubmitNewQuiz(object sender, EventArgs e)
         {
-            var quiz = new Quiz();
+            
+            var quiz = new Quiz
+            {
+                Quizname = QuizTextBox.Text,
+                MadeById = GameMaster.GetUserId(Membership.GetUser().UserName),
+            };
         }
+
+        //
 
 
     }

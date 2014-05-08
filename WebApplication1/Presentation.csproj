@@ -60,6 +60,7 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="MemberPages\AddQuestionForm.aspx" />
+    <Content Include="MemberPages\AddQuizForm.aspx" />
     <Content Include="MemberPages\ChangePassword.aspx" />
     <Content Include="Stylesheets\QuizStylesheet.css" />
     <Content Include="Web.config" />
@@ -86,6 +87,13 @@
     </Compile>
     <Compile Include="MemberPages\AddQuestionForm.aspx.designer.cs">
       <DependentUpon>AddQuestionForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MemberPages\AddQuizForm.aspx.cs">
+      <DependentUpon>AddQuizForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MemberPages\AddQuizForm.aspx.designer.cs">
+      <DependentUpon>AddQuizForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="MemberPages\ChangePassword.aspx.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
