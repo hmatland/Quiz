@@ -269,13 +269,12 @@ namespace DataAccess
             }   
         }
 
-        public static long AddGameToDb(long quizId, long userId, int score)
+        public static long AddGameToDb(long quizId, int score)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var quizCmd = new SqlCommand("INSERT INTO Game (UserId, Score, QuizId) Output INSERTED.GameId VALUES (@UserId, @Score, @QuizId)", connection);
-                quizCmd.Parameters.Add("@UserId", SqlDbType.BigInt).Value = userId;
+                var quizCmd = new SqlCommand("INSERT INTO Game (Score, QuizId) Output INSERTED.GameId VALUES (@Score, @QuizId)", connection);
                 quizCmd.Parameters.Add("@QuizId", SqlDbType.BigInt).Value = quizId;
                 quizCmd.Parameters.Add("@Score", SqlDbType.Int).Value = score;
                 quizCmd.Prepare();
@@ -285,7 +284,8 @@ namespace DataAccess
                     return (long) reader["GameId"];
                 }
 
-            }  
+            }
+            return -1;
         }
 
     }

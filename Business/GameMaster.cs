@@ -83,19 +83,25 @@ namespace Business
             DataAccessMachine.AddNewQuizToDb(quiz);
         }
 
-        public static long InitializeGame(long quizId, string userName, bool correctFirstAnswer)
+        public static long InitializeGame(long quizId, bool correctFirstAnswer)
         {
-            var userId = GetUserId(userName);
-            var gameId = DataAccessMachine.AddGameToDb(quizId, userId, 0);
+            var gameId = DataAccessMachine.AddGameToDb(quizId, 0);
             DataAccessMachine.IncrementGameScore(gameId);
             return gameId;
         }
 
-        public static long IncrementGameScore(long gameId)
+        public static void IncrementGameScore(long gameId)
         {
             DataAccessMachine.IncrementGameScore(gameId);
         }
 
 
+        public static void UpdateGame(long gameId, bool isCorrect)
+        {
+            if (isCorrect)
+            {
+                IncrementGameScore(gameId);
+            }
+        }
     }
 }

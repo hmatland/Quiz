@@ -14,6 +14,7 @@ namespace Presentation
 
             if (!IsPostBack)
             {
+                Session.Remove("gameId");
                 long quizId;
                 var isParsed = long.TryParse(Request.QueryString["quizId"], out quizId);
                 if (isParsed)
@@ -57,8 +58,17 @@ namespace Presentation
             var quizId = long.Parse(commandArguments[0]);
             var questionId = long.Parse(commandArguments[1]);
             var answerId = long.Parse(commandArguments[2]);
-
-            Information.Text = "The answer: " + ((Button)sender).Text + " is: " + GameMaster.IsAnswerCorrect(answerId).ToString();
+            var isCorrect = GameMaster.IsAnswerCorrect(answerId);
+            if (Session["gameId"] == null)
+            {
+                Session["gameId"] = GameMaster.InitializeGame(quizId, isCorrect);
+            }
+            else
+            {
+                GameMaster.UpdateGame((long)Session["gameId"],isCorrect);   
+            }
+            
+            Information.Text = "The answer: " + ((Button)sender).Text + " is: " + isCorrect;
             var questionWithAnswers = GameMaster.GetNextQuestionWithAnswers(quizId, questionId);
             if (questionWithAnswers == null)
                 QuizComplete(quizId);
@@ -69,10 +79,10 @@ namespace Presentation
         protected void QuizComplete(long quizId)
         {
             Question.Text = "Quiz: " + quizId +" has been completed!";
-            Answer1.Text = "";
-            Answer2.Text = "";
-            Answer3.Text = "";
-            Answer4.Text = "";
+            Answer1.Visible = false;
+            Answer2.Visible = false;
+            Answer3.Visible = false;
+            Answer4.Visible = false;
         }
 
         protected void Quit_Quiz(object sender, EventArgs e)
