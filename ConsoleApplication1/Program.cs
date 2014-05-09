@@ -46,7 +46,7 @@ namespace ConsoleApplication1
             dataAccess.AddQuestionWithAnswersToDB(questionWithAnswers);*/
 
             /*DataAccessMachine dataAccess = new DataAccessMachine();
-            var questionWithAnswers = dataAccess.GetQuestionWithAnswers();
+            var questionWithAnswers = dataAccess.GetQuestion();
             Console.WriteLine("test");*/
 
 
