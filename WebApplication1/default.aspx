@@ -28,7 +28,7 @@
             <LoggedInTemplate>
                 <asp:Button ID="NewQuiz" runat="server" Text="Make New Quiz" OnClick="newQuiz" />
                 <br />
-                <asp:Button ID="editQuiz" runat="server" Text="Edit Quiz" OnClick="editQuiz_Click" />
+                <asp:Button ID="editQuiz" runat="server" Text="Edit Quiz" OnClick="editQuiz_Click" Width="100px" />
             </LoggedInTemplate>
         </asp:LoginView>
         <br />
