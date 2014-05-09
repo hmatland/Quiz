@@ -63,6 +63,10 @@ namespace Business
             var userId = DataAccessMachine.GetUserId(username);
             return DataAccessMachine.GetQuizes(userId);
         }
+        public static List<Quiz> GetAllQuizes() 
+        {
+            return DataAccessMachine.GetAllQuizes();
+        }
 
         public static long GetUserId(string username)
         {

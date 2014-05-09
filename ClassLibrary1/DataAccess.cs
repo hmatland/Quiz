@@ -205,6 +205,30 @@ namespace DataAccess
             }
         }
 
+        public static List<Quiz> GetAllQuizes()
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var quizes = new List<Quiz>();
+                connection.Open();
+                var getAllCmd = new SqlCommand("SELECT * FROM Quiz", connection);
+                getAllCmd.Prepare();
+                var reader = getAllCmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var quiz = new Quiz
+                    {
+                        Id = (long)reader["QuizId"],
+                        MadeById = (long)reader["UserId"],
+                        Quizname = (string)reader["Name"]
+                    };
+                    quizes.Add(quiz);
+                }
+                return quizes;
+            }
+
+        }
+
         public static void AddUserNameToQuizDb(string username)
         {
             using (var connection = new SqlConnection(ConnectionString))
