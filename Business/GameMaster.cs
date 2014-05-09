@@ -81,7 +81,27 @@ namespace Business
 
         public static void AddNewQuizToDb(Quiz quiz) {
             DataAccessMachine.AddNewQuizToDb(quiz);
-        
+        }
+
+        public static long InitializeGame(long quizId, bool correctFirstAnswer)
+        {
+            var gameId = DataAccessMachine.AddGameToDb(quizId, 0);
+            DataAccessMachine.IncrementGameScore(gameId);
+            return gameId;
+        }
+
+        public static void IncrementGameScore(long gameId)
+        {
+            DataAccessMachine.IncrementGameScore(gameId);
+        }
+
+
+        public static void UpdateGame(long gameId, bool isCorrect)
+        {
+            if (isCorrect)
+            {
+                IncrementGameScore(gameId);
+            }
         }
 
         public static string GetQuizName(long quizId)
