@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Business;
 using DataObject;
-
+using System.Web.Security;
 namespace Presentation
 {
     public partial class _default : System.Web.UI.Page
@@ -17,6 +17,15 @@ namespace Presentation
             foreach (var quiz in getAllQuizes)
             {
                 ChooseQuizDropDown.Items.Add(new ListItem(quiz.Quizname, quiz.Id.ToString()));
+            }
+            if (Request.IsAuthenticated)
+            {
+                var quizesOwnedByUser = GameMaster.GetQuizes(Membership.GetUser().UserName);
+                foreach (var quiz in quizesOwnedByUser)
+                {
+                    var dropDownList = (DropDownList)LoginView1.FindControl("EditQuizDropDown");
+                    dropDownList.Items.Add(new ListItem(quiz.Quizname, quiz.Id.ToString()));
+                }
             }
 
         }
@@ -48,5 +57,6 @@ namespace Presentation
             Response.Redirect("/MemberPages/AddQuizForm.aspx");
         }
 
+       
     }
 }

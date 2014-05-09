@@ -32,6 +32,10 @@
             <LoggedInTemplate>
                 <asp:Button ID="NewQuiz" runat="server" Text="Make New Quiz" OnClick="newQuiz" />
                 <br />
+                <br />
+                <asp:DropDownList ID="EditQuizDropDown" runat="server" DataTextField="Quizname" DataValueField="Id">
+                </asp:DropDownList>
+                <br />
                 <asp:Button ID="editQuiz" runat="server" Text="Edit Quiz" OnClick="editQuiz_Click" Width="100px" />
             </LoggedInTemplate>
         </asp:LoginView>
