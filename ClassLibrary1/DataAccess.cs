@@ -192,5 +192,19 @@ namespace DataAccess
                 questionCmd.ExecuteNonQuery();
             }
         }
+
+        public static void AddNewQuizToDb(Quiz quiz) {
+            using (var connection = new SqlConnection(ConnectionString)) {
+                connection.Open();
+                var quizCmd = new SqlCommand("INSERT INTO [Quiz] (Name, UserId) VALUES (@quizName, @userId)", connection);
+                quizCmd.Parameters.Add("@quizName", SqlDbType.VarChar, 50).Value = quiz.Quizname;
+                quizCmd.Parameters.Add("@userId", SqlDbType.BigInt).Value = quiz.MadeById;
+                quizCmd.Prepare();
+                quizCmd.ExecuteNonQuery();
+            
+            }
+                
+                
+        }
     }
 }

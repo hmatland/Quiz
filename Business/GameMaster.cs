@@ -61,5 +61,10 @@ namespace Business
         {
             DataAccessMachine.AddUserNameToQuizDb(userName);
         }
+
+        public static void AddNewQuizToDb(Quiz quiz) {
+            DataAccessMachine.AddNewQuizToDb(quiz);
+        
+        }
     }
 }

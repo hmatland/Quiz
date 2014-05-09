@@ -26,10 +26,10 @@ namespace Presentation.MemberPages
                 Quizname = QuizTextBox.Text,
                 MadeById = GameMaster.GetUserId(Membership.GetUser().UserName),
             };
+            GameMaster.AddNewQuizToDb(quiz);
         }
 
-        //
-
+        
 
     }
 }
