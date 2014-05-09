@@ -217,3 +217,4 @@ pip-log.txt
 WebApplication1/App_Data/aspnetdb_log.ldf
 *.MDF
 *.ldf
+WebApplication1/App_Data/ASPNETDB.MDF

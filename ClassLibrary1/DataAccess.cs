@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net.Sockets;
 using DataObject;
 
 namespace DataAccess
@@ -50,9 +51,25 @@ namespace DataAccess
             }
         }
 
-        public static QuestionWithAnswers GetNextQuestionWithAnswers(long quizId, long questionId)
+        public static QuestionWithAnswers GetNextQuestion(long quizId, long previousQuestionId)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var questionWithAnswers = new QuestionWithAnswers();
+                connection.Open();
+                var questionCmd =
+                new SqlCommand("SELECT TOP 1 * FROM Question WHERE QuestionId = @QuestionId AND QuizId > @QuizId",connection);
+                questionCmd.Prepare();
+                var reader = questionCmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    questionWithAnswers.Id = (long) reader["QuestionId"];
+                    questionWithAnswers.QuestionText = (string) reader["Text"];
+                    questionWithAnswers.QuizId = (long) reader["QuizId"];
+                    return questionWithAnswers;
+                }
+            }
+            return null;
         }
 
         public static void AddQuestiontoDb(string questionText, long quizId)
@@ -109,9 +126,10 @@ namespace DataAccess
                     questionWithAnswers.Id = (long) reader["QuestionId"];
                     questionWithAnswers.QuestionText = (string) reader["Text"];
                     questionWithAnswers.QuizId = (long) reader["QuizId"];
+                    return questionWithAnswers;
                 }
             }
-            return questionWithAnswers;
+            return null;
         }
 
         public static List<Answer> GetListOfAnswers(long questionId)

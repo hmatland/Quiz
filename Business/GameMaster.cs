@@ -11,6 +11,18 @@ namespace Business
         public static QuestionWithAnswers GetQuestionWithAnswers()
         {
             var questionWithAnswers = DataAccessMachine.GetQuestion();
+            if (questionWithAnswers == null)
+                return null;
+            questionWithAnswers.Answers = DataAccessMachine.GetListOfAnswers(questionWithAnswers.Id);
+            questionWithAnswers.Answers = ShuffleAnswers(questionWithAnswers.Answers);
+            return questionWithAnswers;
+        }
+
+        public static QuestionWithAnswers GetNextQuestionWithAnswers(long quizId, long previousQuestionId)
+        {
+            var questionWithAnswers = DataAccessMachine.GetNextQuestion(quizId, previousQuestionId);
+            if (questionWithAnswers == null)
+                return null;
             questionWithAnswers.Answers = DataAccessMachine.GetListOfAnswers(questionWithAnswers.Id);
             questionWithAnswers.Answers = ShuffleAnswers(questionWithAnswers.Answers);
             return questionWithAnswers;

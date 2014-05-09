@@ -10,7 +10,20 @@
 namespace Presentation {
     
     
+<<<<<<< HEAD
     public partial class _default {
+=======
+    public partial class WebForm1 {
+        
+        /// <summary>
+        /// Head1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
+>>>>>>> fdc64b8c69deb72c48ad55824daa854c4571f2be
         
         /// <summary>
         /// Link1 control.
@@ -31,48 +44,93 @@ namespace Presentation {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+<<<<<<< HEAD
         /// welcomeLabel control.
+=======
+        /// Information control.
+>>>>>>> fdc64b8c69deb72c48ad55824daa854c4571f2be
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::System.Web.UI.WebControls.Label welcomeLabel;
         
         /// <summary>
         /// LoginStatus1 control.
+=======
+        protected global::System.Web.UI.WebControls.Label Information;
+        
+        /// <summary>
+        /// Question control.
+>>>>>>> fdc64b8c69deb72c48ad55824daa854c4571f2be
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::System.Web.UI.WebControls.LoginStatus LoginStatus1;
         
         /// <summary>
         /// Register control.
+=======
+        protected global::System.Web.UI.WebControls.Label Question;
+        
+        /// <summary>
+        /// Answer1 control.
+>>>>>>> fdc64b8c69deb72c48ad55824daa854c4571f2be
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::System.Web.UI.WebControls.Button Register;
         
         /// <summary>
         /// TakeQuiz control.
+=======
+        protected global::System.Web.UI.WebControls.Button Answer1;
+        
+        /// <summary>
+        /// Answer2 control.
+>>>>>>> fdc64b8c69deb72c48ad55824daa854c4571f2be
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::System.Web.UI.WebControls.Button TakeQuiz;
         
         /// <summary>
         /// LoginView1 control.
+=======
+        protected global::System.Web.UI.WebControls.Button Answer2;
+        
+        /// <summary>
+        /// Answer3 control.
+>>>>>>> fdc64b8c69deb72c48ad55824daa854c4571f2be
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+<<<<<<< HEAD
         protected global::System.Web.UI.WebControls.LoginView LoginView1;
+=======
+        protected global::System.Web.UI.WebControls.Button Answer3;
+        
+        /// <summary>
+        /// Answer4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Answer4;
+>>>>>>> fdc64b8c69deb72c48ad55824daa854c4571f2be
     }
 }
