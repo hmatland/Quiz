@@ -50,6 +50,11 @@ namespace DataAccess
             }
         }
 
+        public static QuestionWithAnswers GetNextQuestionWithAnswers(long quizId, long questionId)
+        {
+            throw new NotImplementedException();
+        }
+
         public static void AddQuestiontoDb(string questionText, long quizId)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -89,7 +94,7 @@ namespace DataAccess
             }
         }
 
-        public static QuestionWithAnswers GetQuestionWithAnswers()
+        public static QuestionWithAnswers GetQuestion()
         {
             var questionWithAnswers = new QuestionWithAnswers();
             using (var connection = new SqlConnection(ConnectionString))
@@ -103,13 +108,13 @@ namespace DataAccess
                 {
                     questionWithAnswers.Id = (long) reader["QuestionId"];
                     questionWithAnswers.QuestionText = (string) reader["Text"];
+                    questionWithAnswers.QuizId = (long) reader["QuizId"];
                 }
             }
-            questionWithAnswers.Answers = GetListOfAnswers(questionWithAnswers.Id);
             return questionWithAnswers;
         }
 
-        public static List<Answer> GetListOfAnswers(long id)
+        public static List<Answer> GetListOfAnswers(long questionId)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -117,7 +122,7 @@ namespace DataAccess
                 connection.Open();
                 var questionCmd = new SqlCommand("SELECT * FROM Answer WHERE QuestionID = @ID",
                     connection);
-                questionCmd.Parameters.Add(@"ID", SqlDbType.BigInt).Value = id;
+                questionCmd.Parameters.Add(@"ID", SqlDbType.BigInt).Value = questionId;
                 questionCmd.Prepare();
                 var reader = questionCmd.ExecuteReader();
                 while (reader.Read())

@@ -11,5 +11,6 @@ namespace DataObject
         public long Id { get; set; }
         public string QuestionText { get; set; }
         public List<Answer> Answers { get; set; }
+        public long QuizId { get; set; }
     }
 }

@@ -10,9 +10,10 @@ namespace Business
     {
         public static QuestionWithAnswers GetQuestionWithAnswers()
         {
-            var questionWithAnswer = DataAccessMachine.GetQuestionWithAnswers();
-            questionWithAnswer.Answers = ShuffleAnswers(questionWithAnswer.Answers);
-            return questionWithAnswer;
+            var questionWithAnswers = DataAccessMachine.GetQuestion();
+            questionWithAnswers.Answers = DataAccessMachine.GetListOfAnswers(questionWithAnswers.Id);
+            questionWithAnswers.Answers = ShuffleAnswers(questionWithAnswers.Answers);
+            return questionWithAnswers;
         }
 
         public static List<Answer> ShuffleAnswers(List<Answer> answers)
