@@ -75,5 +75,10 @@ namespace Presentation
             Answer4.Text = "";
         }
 
+        protected void Quit_Quiz(object sender, EventArgs e)
+        {
+            Response.Redirect("default.aspx");
+        }
+
     }
 }

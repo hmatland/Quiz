@@ -22,7 +22,10 @@
             <asp:Button ID="Answer2" runat="server" CssClass="buttons" Text="Button" Width="350px" OnClick="Answer_Click"/><br />
             <asp:Button ID="Answer3" runat="server" CssClass="buttons" Text="Button" Width="350px" OnClick="Answer_Click"/>
             <asp:Button ID="Answer4" runat="server" CssClass="buttons" Text="Button" Width="350px" OnClick="Answer_Click"/>
+                
             </div>
+
+            <asp:Button ID="Quit" runat="server" Text="Quit" OnClick ="Quit_Quiz"/>
                         
         </form>
     </body>

@@ -13,5 +13,32 @@ namespace Presentation
         {
 
         }
+
+        protected void goToLoginPage(object sender, EventArgs e)
+        {
+            Response.Redirect("Account/Login.aspx");
+        }
+
+        protected void goToRegisterPage(object sender, EventArgs e)
+        {
+            Response.Redirect("Account/Register.aspx");
+        }
+
+        protected void goToTakeQuiz(object sender, EventArgs e)
+        {
+            Response.Redirect("TakeQuiz.aspx");
+        }
+
+        protected void editQuiz_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/MemberPages/AddQuestionForm.aspx");
+
+        }
+
+        protected void newQuiz(object sender, EventArgs e)
+        {
+            Response.Redirect("/MemberPages/AddQuizForm.aspx");
+        }
+
     }
 }

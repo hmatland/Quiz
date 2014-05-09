@@ -215,5 +215,6 @@ pip-log.txt
 .mr.developer.cfg
 *.MDF
 WebApplication1/App_Data/aspnetdb_log.ldf
+*.MDF
+*.ldf
 WebApplication1/App_Data/ASPNETDB.MDF
-WebApplication1/App_Data/aspnetdb_log.ldf
