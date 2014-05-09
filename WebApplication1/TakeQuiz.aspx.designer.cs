@@ -85,6 +85,15 @@ namespace Presentation {
         protected global::System.Web.UI.WebControls.Button Answer4;
         
         /// <summary>
+        /// GameOver control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GameOver;
+        
+        /// <summary>
         /// Quit control.
         /// </summary>
         /// <remarks>

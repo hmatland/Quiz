@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net.Sockets;
+using System.Security.Policy;
 using DataObject;
 
 namespace DataAccess
@@ -261,10 +262,10 @@ namespace DataAccess
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var quizCmd = new SqlCommand("UPDATE Game SET Score = Score + 1 WHERE GameId = @GameId", connection);
-                quizCmd.Parameters.Add("@GameId", SqlDbType.BigInt).Value = gameId;
-                quizCmd.Prepare();
-                quizCmd.ExecuteNonQuery();
+                var cmd = new SqlCommand("UPDATE Game SET Score = Score + 1 WHERE GameId = @GameId", connection);
+                cmd.Parameters.Add("@GameId", SqlDbType.BigInt).Value = gameId;
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
 
             }   
         }
@@ -274,11 +275,11 @@ namespace DataAccess
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                var quizCmd = new SqlCommand("INSERT INTO Game (Score, QuizId) Output INSERTED.GameId VALUES (@Score, @QuizId)", connection);
-                quizCmd.Parameters.Add("@QuizId", SqlDbType.BigInt).Value = quizId;
-                quizCmd.Parameters.Add("@Score", SqlDbType.Int).Value = score;
-                quizCmd.Prepare();
-                var reader = quizCmd.ExecuteReader();
+                var cmd = new SqlCommand("INSERT INTO Game (Score, QuizId) Output INSERTED.GameId VALUES (@Score, @QuizId)", connection);
+                cmd.Parameters.Add("@QuizId", SqlDbType.BigInt).Value = quizId;
+                cmd.Parameters.Add("@Score", SqlDbType.Int).Value = score;
+                cmd.Prepare();
+                var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     return (long) reader["GameId"];
@@ -286,6 +287,44 @@ namespace DataAccess
 
             }
             return -1;
+        }
+
+        public static void AddUserIdToGame(long gameId, long userId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var cmd = new SqlCommand("UPDATE Game SET UserId = @UserId WHERE GameId = @GameId", connection);
+                cmd.Parameters.Add("@GameId", SqlDbType.BigInt).Value = gameId;
+                cmd.Parameters.Add("@UserId", SqlDbType.BigInt).Value = userId;
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+
+            }  
+            
+        }
+
+        public static Game GetGame(long gameId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var quizCmd = new SqlCommand("SELECT * FROM Game WHERE GameId = @GameId", connection);
+                quizCmd.Parameters.Add("@GameId", SqlDbType.BigInt).Value = gameId;
+                quizCmd.Prepare();
+                var reader = quizCmd.ExecuteReader();
+                var game = new Game();
+                while (reader.Read())
+                {
+                    game.UserId = (long)reader["UserId"];
+                    game.QuizId = (long) reader["QuizId"];
+                    game.Score = (int) reader["Score"];
+                    game.Id = (long) reader["GameId"];
+                    return game;
+                }
+                return null;
+
+            }  
         }
 
     }

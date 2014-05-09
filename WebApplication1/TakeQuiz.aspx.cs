@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.UI.WebControls;
@@ -59,6 +60,8 @@ namespace Presentation
             var questionId = long.Parse(commandArguments[1]);
             var answerId = long.Parse(commandArguments[2]);
             var isCorrect = GameMaster.IsAnswerCorrect(answerId);
+            
+            
             if (Session["gameId"] == null)
             {
                 Session["gameId"] = GameMaster.InitializeGame(quizId, isCorrect);
@@ -78,16 +81,24 @@ namespace Presentation
 
         protected void QuizComplete(long quizId)
         {
-            Question.Text = "Quiz: " + quizId +" has been completed!";
+            Question.Text = "Quiz: " + quizId +" has been completed!\n";
             Answer1.Visible = false;
             Answer2.Visible = false;
             Answer3.Visible = false;
             Answer4.Visible = false;
+            var game = GameMaster.GetGame((long)Session["gameId"]);
+            GameOver.Visible = true;
+            GameOver.Text = "All questions are answered. Your score is: " + game.Score;
         }
 
         protected void Quit_Quiz(object sender, EventArgs e)
         {
             Response.Redirect("default.aspx");
+        }
+
+        protected void SaveHighScore(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
     }

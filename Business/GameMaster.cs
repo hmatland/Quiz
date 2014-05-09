@@ -103,5 +103,10 @@ namespace Business
                 IncrementGameScore(gameId);
             }
         }
+
+        public static Game GetGame(long gameId)
+        {
+            return DataAccessMachine.GetGame(gameId);
+        }
     }
 }
