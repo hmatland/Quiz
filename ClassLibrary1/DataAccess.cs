@@ -231,5 +231,38 @@ namespace DataAccess
                 
                 
         }
+
+        public static void IncrementGameScore(long gameId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var quizCmd = new SqlCommand("UPDATE Game SET Score = Score + 1 WHERE GameId = @GameId", connection);
+                quizCmd.Parameters.Add("@GameId", SqlDbType.BigInt).Value = gameId;
+                quizCmd.Prepare();
+                quizCmd.ExecuteNonQuery();
+
+            }   
+        }
+
+        public static long AddGameToDb(long quizId, long userId, int score)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var quizCmd = new SqlCommand("INSERT INTO Game (UserId, Score, QuizId) Output INSERTED.GameId VALUES (@UserId, @Score, @QuizId)", connection);
+                quizCmd.Parameters.Add("@UserId", SqlDbType.BigInt).Value = userId;
+                quizCmd.Parameters.Add("@QuizId", SqlDbType.BigInt).Value = quizId;
+                quizCmd.Parameters.Add("@Score", SqlDbType.Int).Value = score;
+                quizCmd.Prepare();
+                var reader = quizCmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    return (long) reader["GameId"];
+                }
+
+            }  
+        }
+
     }
 }
