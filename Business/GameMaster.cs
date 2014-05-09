@@ -6,7 +6,7 @@ using DataObject;
 
 namespace Business
 {
-    public static class GameMaster
+    public class GameMaster
     {
         public static QuestionWithAnswers GetQuestionWithAnswers()
         {
