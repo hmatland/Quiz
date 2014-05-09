@@ -53,5 +53,10 @@ namespace Presentation
             FillInQuestionAndAnswers(questionWithAnswers);
         }
 
+        protected void Quit_Quiz(object sender, EventArgs e)
+        {
+            Response.Redirect("default.aspx");
+        }
+
     }
 }

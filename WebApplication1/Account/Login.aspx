@@ -13,7 +13,7 @@
     
         <h1>LoginPage
         </h1>
-        <div><asp:Login ID="Login1" runat="server">
+        <div><asp:Login ID="Login1" runat="server" DestinationPageUrl="~/default.aspx">
             <LayoutTemplate>
                 <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">User Name:</asp:Label>
                 <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
