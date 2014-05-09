@@ -58,7 +58,9 @@ namespace DataAccess
                 var questionWithAnswers = new QuestionWithAnswers();
                 connection.Open();
                 var questionCmd =
-                new SqlCommand("SELECT TOP 1 * FROM Question WHERE QuestionId = @QuestionId AND QuizId > @QuizId",connection);
+                new SqlCommand("SELECT * FROM Question WHERE QuestionId > @QuestionId AND QuizId = @QuizId",connection);
+                questionCmd.Parameters.Add(@"QuestionId", SqlDbType.BigInt).Value = previousQuestionId;
+                questionCmd.Parameters.Add(@"QuizId", SqlDbType.BigInt).Value = quizId;
                 questionCmd.Prepare();
                 var reader = questionCmd.ExecuteReader();
                 while (reader.Read())

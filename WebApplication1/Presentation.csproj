@@ -63,6 +63,7 @@
     <Content Include="MemberPages\AddQuizForm.aspx" />
     <Content Include="MemberPages\ChangePassword.aspx" />
     <Content Include="Stylesheets\QuizStylesheet.css" />
+    <Content Include="TakeQuiz.aspx" />
     <Content Include="Web.config" />
     <Content Include="default.aspx" />
   </ItemGroup>
@@ -109,6 +110,13 @@
     </Compile>
     <Compile Include="default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TakeQuiz.aspx.cs">
+      <DependentUpon>TakeQuiz.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TakeQuiz.aspx.designer.cs">
+      <DependentUpon>TakeQuiz.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
