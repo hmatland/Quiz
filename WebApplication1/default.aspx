@@ -15,16 +15,20 @@
         <br />
         <br />
         <asp:LoginStatus ID="LoginStatus1" runat="server" />
-        <br />
-        <br />
-        <asp:Button ID="Register" runat="server" Text="Register" OnClick="goToRegisterPage" />
     
         <br />
-    
         <br />
-        <asp:Button ID="TakeQuiz" runat="server" Text="Take quiz" OnClick ="goToTakeQuiz" />
+        <asp:DropDownList ID="ChooseQuizDropDown" runat="server" DataTextField="Quizname" DataValueField="Id">
+        </asp:DropDownList>
+        <br />
+        <br />
+         <asp:Button ID="TakeQuiz" runat="server" Text="Take quiz" OnClick ="goToTakeQuiz" />
+        <br />
         <br />
         <asp:LoginView ID="LoginView1" runat="server">
+            <AnonymousTemplate>
+                <asp:Button ID="Register" runat="server" OnClick="goToRegisterPage" Text="Register" />
+            </AnonymousTemplate>
             <LoggedInTemplate>
                 <asp:Button ID="NewQuiz" runat="server" Text="Make New Quiz" OnClick="newQuiz" />
                 <br />

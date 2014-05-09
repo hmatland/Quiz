@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Business;
+using DataObject;
 
 namespace Presentation
 {
@@ -11,6 +13,11 @@ namespace Presentation
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var getAllQuizes = GameMaster.GetAllQuizes();
+            foreach (var quiz in getAllQuizes)
+            {
+                ChooseQuizDropDown.Items.Add(new ListItem(quiz.Quizname, quiz.Id.ToString()));
+            }
 
         }
 
@@ -26,7 +33,8 @@ namespace Presentation
 
         protected void goToTakeQuiz(object sender, EventArgs e)
         {
-            Response.Redirect("TakeQuiz.aspx");
+            var quizId = long.Parse(ChooseQuizDropDown.SelectedValue);
+            Response.Redirect("TakeQuiz.aspx?quizId=" + quizId);
         }
 
         protected void editQuiz_Click(object sender, EventArgs e)
