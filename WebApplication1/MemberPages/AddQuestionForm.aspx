@@ -10,12 +10,15 @@
 <body>
     <form id="AddQuestionWithAnswersForm" runat="server">
     <div>
-        <h1>Welcome <asp:LoginName ID="LoginName1" runat="server" />.</h1><br />
+        <h1>Welcome <asp:LoginName ID="LoginName1" runat="server" />.</h1>
+        <p>
+            You are adding a question to:&nbsp;&nbsp; <asp:Label ID="QuizName" runat="server" Text="Label"></asp:Label>
+        </p><br />
         <asp:Label ID="QuestionLabel" runat="server" Text="Enter question: "></asp:Label>
         <asp:TextBox ID="QuestionTextBox" runat="server" Width="373px"></asp:TextBox>
         <br />
-        <asp:Label ID="QuizDropDownListLabel" runat="server" Text="Add question to which quiz "></asp:Label><asp:DropDownList ID="QuizDropDownList" runat="server" DataTextField="Quizname" DataValueField="Id">
-        </asp:DropDownList>
+        <!--<asp:Label ID="QuizDropDownListLabel" runat="server" Text="Add question to which quiz "></asp:Label><asp:DropDownList ID="QuizDropDownList" runat="server" DataTextField="Quizname" DataValueField="Id">
+        </asp:DropDownList>-->
         <br />
         <asp:Label ID="AnswerLabel1" runat="server" Text="Correct Answer:"></asp:Label>
         <asp:TextBox ID="CorrectTextBox" runat="server" Width="361px"></asp:TextBox>

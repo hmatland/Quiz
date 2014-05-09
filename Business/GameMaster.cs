@@ -104,9 +104,15 @@ namespace Business
             }
         }
 
+
         public static Game GetGame(long gameId)
         {
             return DataAccessMachine.GetGame(gameId);
+        }
+
+        public static string GetQuizName(long quizId)
+        {
+            return DataAccessMachine.GetQuizName(quizId);
         }
     }
 }
