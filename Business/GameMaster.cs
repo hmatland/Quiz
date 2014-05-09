@@ -83,5 +83,10 @@ namespace Business
             DataAccessMachine.AddNewQuizToDb(quiz);
         
         }
+
+        public static string GetQuizName(long quizId)
+        {
+            return DataAccessMachine.GetQuizName(quizId);
+        }
     }
 }

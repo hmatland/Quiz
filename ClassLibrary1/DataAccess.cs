@@ -252,8 +252,25 @@ namespace DataAccess
                 quizCmd.ExecuteNonQuery();
             
             }
+              
                 
-                
+        }
+       
+        public static string GetQuizName(long quizId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var quizCmd = new SqlCommand("SELECT Name FROM Quiz WHERE QuizId = @ID", connection);
+                quizCmd.Parameters.Add(@"ID", SqlDbType.BigInt).Value = quizId;
+                quizCmd.Prepare();
+                var reader = quizCmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    return (string)reader["Name"];
+                }
+                return "";
+            }
         }
     }
 }

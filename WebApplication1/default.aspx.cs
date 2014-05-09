@@ -11,6 +11,7 @@ namespace Presentation
 {
     public partial class _default : System.Web.UI.Page
     {
+        public long QuizId { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             var getAllQuizes = GameMaster.GetAllQuizes();
@@ -48,7 +49,11 @@ namespace Presentation
 
         protected void editQuiz_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/MemberPages/AddQuestionForm.aspx");
+            var dropDownList = (DropDownList)LoginView1.FindControl("EditQuizDropDown");
+            var quizId = long.Parse(dropDownList.SelectedValue);
+            Session["sendId"] = quizId;
+ 
+            Server.Transfer("/MemberPages/AddQuestionForm.aspx");
 
         }
 

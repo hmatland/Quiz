@@ -12,11 +12,14 @@ namespace Presentation.MemberPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var quizesOwnedByUser = GameMaster.GetQuizes(Membership.GetUser().UserName);
+            long quizId = (long)Session["sendId"];
+            QuizName.Text = (string)GameMaster.GetQuizName(quizId);
+
+           /* var quizesOwnedByUser = GameMaster.GetQuizes(Membership.GetUser().UserName);
             foreach (var quiz in quizesOwnedByUser)
             {
                 QuizDropDownList.Items.Add(new ListItem(quiz.Quizname,quiz.Id.ToString()));
-            }
+            }*/
         }
 
         protected void SubmitQuestionWithAnswers(object sender, EventArgs e)
@@ -48,8 +51,8 @@ namespace Presentation.MemberPages
                     }
                 }
             };
-            var quizId = long.Parse(QuizDropDownList.SelectedValue);
-            GameMaster.AddQuestionWithAnswers(questionWithAnswers,quizId);
+            long quizId = (long)Session["sendId"];
+            GameMaster.AddQuestionWithAnswers(questionWithAnswers, quizId);
             //Response.Redirect("default.aspx?id="+id);
         }
     }
