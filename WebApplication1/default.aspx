@@ -17,7 +17,7 @@
         <asp:LoginStatus ID="LoginStatus1" runat="server" />
         <br />
         <br />
-        <asp:Button ID="Register" runat="server" Text="SignIn" OnClick="goToRegisterPage" />
+        <asp:Button ID="Register" runat="server" Text="Register" OnClick="goToRegisterPage" />
     
         <br />
     
