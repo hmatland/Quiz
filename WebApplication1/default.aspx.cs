@@ -56,7 +56,7 @@ namespace Presentation
         {
             var dropDownList = (DropDownList)LoginView1.FindControl("EditQuizDropDown");
             var quizId = long.Parse(dropDownList.SelectedValue); 
-            Server.Transfer("/MemberPages/AddQuestionForm.aspx?quizId="+quizId);
+            Server.Transfer("/MemberPages/EditQuizForm.aspx?quizId="+quizId);
 
         }
 
