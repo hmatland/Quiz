@@ -114,5 +114,13 @@ namespace Business
         {
             return DataAccessMachine.GetQuizName(quizId);
         }
+
+        public static Boolean CheckIfRightUser(long quizId, long userId)
+        {
+            long quizBelongsToUserId = DataAccessMachine.GetUserId(quizId);
+            if (quizBelongsToUserId == userId)
+                return true;
+            return false;
+        }
     }
 }

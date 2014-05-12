@@ -14,6 +14,10 @@ namespace Presentation.MemberPages
         {
             long quizId;
             bool quizIdParsed = long.TryParse(Request.QueryString["quizId"],out quizId);
+            long userId = GameMaster.GetUserId(Membership.GetUser().UserName);
+            bool isRightUser = GameMaster.CheckIfRightUser(quizId, userId);
+            if (!isRightUser)
+                Response.Redirect("~/default.aspx");
             if (quizIdParsed)
             {
                 QuizName.Text = (string)GameMaster.GetQuizName(quizId);
@@ -59,7 +63,7 @@ namespace Presentation.MemberPages
                     }
                 }
             };
-            long quizId = (long)Session["sendId"];
+            long quizId = long.Parse(Request.QueryString["quizId"]);
             GameMaster.AddQuestionWithAnswers(questionWithAnswers, quizId);
             //Response.Redirect("default.aspx?id="+id);
         }

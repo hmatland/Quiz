@@ -50,9 +50,7 @@ namespace Presentation
         protected void editQuiz_Click(object sender, EventArgs e)
         {
             var dropDownList = (DropDownList)LoginView1.FindControl("EditQuizDropDown");
-            var quizId = long.Parse(dropDownList.SelectedValue);
-            Session["sendId"] = quizId;
- 
+            var quizId = long.Parse(dropDownList.SelectedValue); 
             Server.Transfer("/MemberPages/AddQuestionForm.aspx?quizId="+quizId);
 
         }

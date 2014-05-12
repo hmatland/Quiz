@@ -344,5 +344,24 @@ namespace DataAccess
             }  
         }
 
+        public static long GetUserId(long quizId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var questionCmd = new SqlCommand("SELECT UserId FROM [Quiz] WHERE QuizId = @quizid",
+                    connection);
+                questionCmd.Parameters.Add(@"quizid", SqlDbType.BigInt).Value = quizId;
+                questionCmd.Prepare();
+                var reader = questionCmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    return (long)reader["UserId"];
+                }
+                return -1;
+            }
+        
+        }
+
     }
 }
