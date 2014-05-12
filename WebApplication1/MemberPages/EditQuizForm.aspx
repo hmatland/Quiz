@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AddQuestionForm.aspx.cs" Inherits="Presentation.MemberPages.AddQuestionForm" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditQuizForm.aspx.cs" Inherits="Presentation.MemberPages.AddQuestionForm" %>
 
 <!DOCTYPE html>
 
@@ -34,6 +34,27 @@
     
         <br />
         <asp:Button ID="SubmitButton" CssClass="buttons" runat="server" Text="Add question with answers to DB" Width="319px" OnClick="SubmitQuestionWithAnswers" />
+    
+        <br />
+        <br />
+        <br />
+        <br />
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSourceQuestions" DataKeyNames="Id">
+            <Columns>
+                <asp:CommandField ShowDeleteButton="True" />
+                <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" />
+                <asp:BoundField DataField="QuestionText" HeaderText="QuestionText" SortExpression="QuestionText" />
+                <asp:BoundField DataField="QuizId" HeaderText="QuizId" SortExpression="QuizId" />
+            </Columns>
+        </asp:GridView>
+        <asp:ObjectDataSource ID="ObjectDataSourceQuestions" runat="server" DeleteMethod="DeleteQuestionWithAnswersFromDb" SelectMethod="GetQuestionWithAnswers" TypeName="Business.GameMaster">
+            <DeleteParameters>
+                <asp:Parameter Name="Id" Type="Int64" />
+            </DeleteParameters>
+            <SelectParameters>
+                <asp:QueryStringParameter DefaultValue="" Name="quizId" QueryStringField="quizId" Type="Int64" />
+            </SelectParameters>
+        </asp:ObjectDataSource>
     
     </div>
     </form>

@@ -27,7 +27,7 @@ namespace Presentation.MemberPages
                 MadeById = GameMaster.GetUserId(Membership.GetUser().UserName),
             };
             GameMaster.AddNewQuizToDb(quiz);
-            Response.Redirect("AddQuestionForm.aspx");
+            Response.Redirect("EditQuizForm.aspx");
         }
 
         
