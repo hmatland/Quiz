@@ -18,7 +18,7 @@ namespace DataAccess
             {
                 connection.Open();
                 var cmd =
-                    new SqlCommand("DELETE FROM (Question) WHERE QuestionId =(@questionid)",
+                    new SqlCommand("DELETE FROM Question WHERE QuestionId =@questionid",
                         connection);
                 cmd.Parameters.Add("@questionid", SqlDbType.BigInt).Value = questionId;
                 cmd.Prepare();
@@ -32,7 +32,7 @@ namespace DataAccess
             {
                 connection.Open();
                 var cmd =
-                    new SqlCommand("DELETE FROM (Answer) WHERE AnswerId =(@answerid)",
+                    new SqlCommand("DELETE FROM Answer WHERE AnswerId =@answerid",
                         connection);
                 cmd.Parameters.Add("@questionid", SqlDbType.BigInt).Value = answerId;
                 cmd.Prepare();
@@ -46,7 +46,7 @@ namespace DataAccess
             {
                 connection.Open();
                 var cmd =
-                    new SqlCommand("DELETE FROM (Answer) WHERE QuestionId =(@questionid)",
+                    new SqlCommand("DELETE FROM Answer WHERE QuestionId = @questionid",
                         connection);
                 cmd.Parameters.Add("@questionid", SqlDbType.BigInt).Value = questionId;
                 cmd.Prepare();
