@@ -53,7 +53,7 @@ namespace Presentation
             var quizId = long.Parse(dropDownList.SelectedValue);
             Session["sendId"] = quizId;
  
-            Server.Transfer("/MemberPages/AddQuestionForm.aspx");
+            Server.Transfer("/MemberPages/AddQuestionForm.aspx?quizId="+quizId);
 
         }
 

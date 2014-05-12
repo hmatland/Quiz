@@ -21,7 +21,15 @@ namespace Presentation
                 if (isParsed)
                 {
                     var questionWithAnswers = GameMaster.GetNextQuestionWithAnswers(quizId, 0);
-                    FillInQuestionAndAnswers(questionWithAnswers);
+                    if (questionWithAnswers != null)
+                    {
+                        FillInQuestionAndAnswers(questionWithAnswers);
+                    }
+                    else
+                    {
+                        Question.Text = "The quiz is empty, please choose another quiz";
+                    
+                    }
                 }
                 else
                 {

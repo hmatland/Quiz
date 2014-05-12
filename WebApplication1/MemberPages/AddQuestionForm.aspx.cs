@@ -12,8 +12,16 @@ namespace Presentation.MemberPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            long quizId = (long)Session["sendId"];
-            QuizName.Text = (string)GameMaster.GetQuizName(quizId);
+            long quizId;
+            bool quizIdParsed = long.TryParse(Request.QueryString["quizId"],out quizId);
+            if (quizIdParsed)
+            {
+                QuizName.Text = (string)GameMaster.GetQuizName(quizId);
+            }
+            else
+            {
+                Response.Redirect("~/default.aspx");
+            }
 
            /* var quizesOwnedByUser = GameMaster.GetQuizes(Membership.GetUser().UserName);
             foreach (var quiz in quizesOwnedByUser)
