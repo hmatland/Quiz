@@ -22,6 +22,11 @@ namespace Presentation
             if (Request.IsAuthenticated)
             {
                 var quizesOwnedByUser = GameMaster.GetQuizes(Membership.GetUser().UserName);
+                if (quizesOwnedByUser.Count == 0)
+                {
+                    LoginView1.FindControl("editQuiz").Visible = false;
+                    LoginView1.FindControl("EditQuizDropDown").Visible = false;
+                }
                 foreach (var quiz in quizesOwnedByUser)
                 {
                     var dropDownList = (DropDownList)LoginView1.FindControl("EditQuizDropDown");
