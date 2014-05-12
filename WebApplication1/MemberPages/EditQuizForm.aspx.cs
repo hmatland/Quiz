@@ -65,7 +65,20 @@ namespace Presentation.MemberPages
             };
             long quizId = long.Parse(Request.QueryString["quizId"]);
             GameMaster.AddQuestionWithAnswers(questionWithAnswers, quizId);
-            //Response.Redirect("default.aspx?id="+id);
+            Server.Transfer("EditQuizForm.aspx?quizId="+quizId);
         }
+
+        protected void Back_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/default.aspx");
+        }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+
     }
 }

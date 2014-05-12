@@ -39,12 +39,13 @@
         <br />
         <br />
         <br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSourceQuestions" DataKeyNames="Id">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSourceQuestions" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
             <Columns>
                 <asp:CommandField ShowDeleteButton="True" />
                 <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" />
                 <asp:BoundField DataField="QuestionText" HeaderText="QuestionText" SortExpression="QuestionText" />
                 <asp:BoundField DataField="QuizId" HeaderText="QuizId" SortExpression="QuizId" />
+                
             </Columns>
         </asp:GridView>
         <asp:ObjectDataSource ID="ObjectDataSourceQuestions" runat="server" DeleteMethod="DeleteQuestionWithAnswersFromDb" SelectMethod="GetQuestionWithAnswers" TypeName="Business.GameMaster">
@@ -55,6 +56,10 @@
                 <asp:QueryStringParameter DefaultValue="" Name="quizId" QueryStringField="quizId" Type="Int64" />
             </SelectParameters>
         </asp:ObjectDataSource>
+    
+        <br />
+        <asp:Button ID="Back" runat="server" OnClick="Back_Click" Text="Back" />
+        <br />
     
     </div>
     </form>

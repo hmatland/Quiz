@@ -26,20 +26,6 @@ namespace DataAccess
             }
         }
 
-        public static void DeleteAnswerFromDb(long answerId)
-        {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                var cmd =
-                    new SqlCommand("DELETE FROM Answer WHERE AnswerId =@answerid",
-                        connection);
-                cmd.Parameters.Add("@questionid", SqlDbType.BigInt).Value = answerId;
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
-            }
-        }
-
         public static void DeleteAllAnswers(long questionId)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -281,7 +267,7 @@ namespace DataAccess
             return null;
         }
 
-        public static List<QuestionWithAnswers> GetQuestionWithAnswers(long quizId) {
+        public static List<QuestionWithAnswers> GetQuestions(long quizId) {
 
             using (var connection = new SqlConnection(ConnectionString))
             {

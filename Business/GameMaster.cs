@@ -121,7 +121,13 @@ namespace Business
 
         public static List<QuestionWithAnswers> GetQuestionWithAnswers(long quizId) 
         {
-            return DataAccessMachine.GetQuestionWithAnswers(quizId);
+            List<QuestionWithAnswers> questionsWithAnswers = new List<QuestionWithAnswers>();
+            questionsWithAnswers = DataAccessMachine.GetQuestions(quizId);
+            foreach (var question in questionsWithAnswers)
+            {
+                question.Answers = DataAccessMachine.GetListOfAnswers(question.Id);
+            }
+            return questionsWithAnswers;
         }
     }
 }
