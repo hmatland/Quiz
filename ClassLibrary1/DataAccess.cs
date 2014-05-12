@@ -281,25 +281,30 @@ namespace DataAccess
             return null;
         }
 
-        public static QuestionWithAnswers GetQuestion()
-        {
-            var questionWithAnswers = new QuestionWithAnswers();
+        public static List<QuestionWithAnswers> GetQuestionWithAnswers(long quizId) {
+
             using (var connection = new SqlConnection(ConnectionString))
             {
+                var listOfQuestions = new List<QuestionWithAnswers>();
+                
                 connection.Open();
-                var questionCmd = new SqlCommand("SELECT TOP 1 * FROM Question ORDER BY NEWID()",
+                var questionCmd = new SqlCommand("SELECT * FROM Question WHERE QuizId = @ID",
                     connection);
+                questionCmd.Parameters.Add(@"ID", SqlDbType.BigInt).Value = quizId;
                 questionCmd.Prepare();
                 var reader = questionCmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    questionWithAnswers.Id = (long) reader["QuestionId"];
-                    questionWithAnswers.QuestionText = (string) reader["Text"];
-                    questionWithAnswers.QuizId = (long) reader["QuizId"];
-                    return questionWithAnswers;
-                }
+                   var questionWithAnswers = new QuestionWithAnswers
+                   {
+                    Id = (long) reader["QuestionId"],
+                    QuestionText = (string) reader["Text"],
+                    QuizId = (long) reader["QuizId"]
+                   };
+                    listOfQuestions.Add(questionWithAnswers);
+                }  
+                return listOfQuestions;
             }
-            return null;
         }
 
         public static string GetQuizName(long quizId)

@@ -8,16 +8,6 @@ namespace Business
 {
     public class GameMaster
     {
-        public static QuestionWithAnswers GetQuestionWithAnswers()
-        {
-            var questionWithAnswers = DataAccessMachine.GetQuestion();
-            if (questionWithAnswers == null)
-                return null;
-            questionWithAnswers.Answers = DataAccessMachine.GetListOfAnswers(questionWithAnswers.Id);
-            questionWithAnswers.Answers = ShuffleAnswers(questionWithAnswers.Answers);
-            return questionWithAnswers;
-        }
-
         public static QuestionWithAnswers GetNextQuestionWithAnswers(long quizId, long previousQuestionId)
         {
             var questionWithAnswers = DataAccessMachine.GetNextQuestion(quizId, previousQuestionId);
@@ -123,10 +113,15 @@ namespace Business
             return false;
         }
 
-        public static void DeleteQuestionWithAnswersFromDb(long questionId)
+        public static void DeleteQuestionWithAnswersFromDb(long Id)
         {
-            DataAccessMachine.DeleteAllAnswers(questionId);
-            DataAccessMachine.DeleteQuestionFromDb(questionId);
+            DataAccessMachine.DeleteAllAnswers(Id);
+            DataAccessMachine.DeleteQuestionFromDb(Id);
+        }
+
+        public static List<QuestionWithAnswers> GetQuestionWithAnswers(long quizId) 
+        {
+            return DataAccessMachine.GetQuestionWithAnswers(quizId);
         }
     }
 }
