@@ -10,6 +10,50 @@ namespace DataAccess
     {
         private const string ConnectionString = "Data Source=(local);Initial Catalog=QuizDB;Integrated Security=SSPI";
 
+
+        public static void DeleteQuestionFromDb(long questionId) 
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var cmd =
+                    new SqlCommand("DELETE FROM (Question) WHERE QuestionId =(@questionid)",
+                        connection);
+                cmd.Parameters.Add("@questionid", SqlDbType.BigInt).Value = questionId;
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static void DeleteAnswerFromDb(long answerId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var cmd =
+                    new SqlCommand("DELETE FROM (Answer) WHERE AnswerId =(@answerid)",
+                        connection);
+                cmd.Parameters.Add("@questionid", SqlDbType.BigInt).Value = answerId;
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static void DeleteAllAnswers(long questionId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var cmd =
+                    new SqlCommand("DELETE FROM (Answer) WHERE QuestionId =(@questionid)",
+                        connection);
+                cmd.Parameters.Add("@questionid", SqlDbType.BigInt).Value = questionId;
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+            
         public static long AddGameToDb(long quizId, int score)
         {
             using (var connection = new SqlConnection(ConnectionString))

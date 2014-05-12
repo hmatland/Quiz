@@ -122,5 +122,11 @@ namespace Business
                 return true;
             return false;
         }
+
+        public static void DeleteQuestionWithAnswersFromDb(long questionId)
+        {
+            DataAccessMachine.DeleteAllAnswers(questionId);
+            DataAccessMachine.DeleteQuestionFromDb(questionId);
+        }
     }
 }
