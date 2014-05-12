@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using DataAccess.DataSetTableAdapters;
 using DataObject;
 
 namespace DataAccess
@@ -68,7 +69,7 @@ namespace DataAccess
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    return (long) reader["GameId"];
+                    return (long)reader["GameId"];
                 }
             }
             return -1;
@@ -76,15 +77,8 @@ namespace DataAccess
 
         public static void AddNewQuizToDb(Quiz quiz)
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                var quizCmd = new SqlCommand("INSERT INTO [Quiz] (Name, UserId) VALUES (@quizName, @userId)", connection);
-                quizCmd.Parameters.Add("@quizName", SqlDbType.VarChar, 50).Value = quiz.Quizname;
-                quizCmd.Parameters.Add("@userId", SqlDbType.BigInt).Value = quiz.MadeById;
-                quizCmd.Prepare();
-                quizCmd.ExecuteNonQuery();
-            }
+            var tableAdapter = new QuizTableAdapter();
+            tableAdapter.Insert(quiz.Quizname, quiz.MadeById);
         }
 
         public static void AddQuestionWithAnswersToDb(QuestionWithAnswers questionWithAnswers, long quizId)
@@ -209,7 +203,7 @@ namespace DataAccess
                 var game = new Game();
                 while (reader.Read())
                 {
-                    game.UserId = (long) reader["UserId"];
+                    game.UserId = reader["UserId"] as int?;
                     game.QuizId = (long) reader["QuizId"];
                     game.Score = (int) reader["Score"];
                     game.Id = (long) reader["GameId"];

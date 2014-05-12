@@ -28,7 +28,6 @@ namespace Presentation
                     else
                     {
                         Question.Text = "The quiz is empty, please choose another quiz";
-                    
                     }
                 }
                 else
@@ -39,7 +38,7 @@ namespace Presentation
             
         }
 
-        protected void FillInQuestionAndAnswers(QuestionWithAnswers questionWithAnswers)
+        protected void FillInQuestionAndAnswers(QuestionWithAnswers questionWithAnswers) 
         {
             Question.Text = questionWithAnswers.QuestionText;
 
