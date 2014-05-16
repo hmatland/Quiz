@@ -85,6 +85,15 @@ namespace Business
             DataAccessMachine.IncrementGameScore(gameId);
         }
 
+        public static void SaveGame(Game game)
+        {
+            DataAccessMachine.SaveGameToDb(game);
+        }
+
+        public static List<Game> GetHighScoreList(long quizId)
+        {
+            return DataAccessMachine.GetHighScoreList(quizId);
+        } 
 
         public static void UpdateGame(long gameId, bool isCorrect)
         {
@@ -93,7 +102,6 @@ namespace Business
                 IncrementGameScore(gameId);
             }
         }
-
 
         public static Game GetGame(long gameId)
         {
@@ -113,16 +121,14 @@ namespace Business
             return false;
         }
 
-        public static void DeleteQuestionWithAnswersFromDb(long Id)
+        public static void DeleteQuestionWithAnswersFromDb(long id)
         {
-            DataAccessMachine.DeleteAllAnswers(Id);
-            DataAccessMachine.DeleteQuestionFromDb(Id);
+            DataAccessMachine.DeleteQuestionWithAnswersFromDb(id);
         }
 
         public static List<QuestionWithAnswers> GetQuestionWithAnswers(long quizId) 
         {
-            List<QuestionWithAnswers> questionsWithAnswers = new List<QuestionWithAnswers>();
-            questionsWithAnswers = DataAccessMachine.GetQuestions(quizId);
+            var questionsWithAnswers = DataAccessMachine.GetQuestions(quizId);
             foreach (var question in questionsWithAnswers)
             {
                 question.Answers = DataAccessMachine.GetListOfAnswers(question.Id);

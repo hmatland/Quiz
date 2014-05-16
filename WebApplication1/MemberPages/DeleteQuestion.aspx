@@ -22,7 +22,7 @@
         </asp:GridView>
         <asp:ObjectDataSource ID="ObjectDataSourceQuestions" runat="server" DeleteMethod="DeleteQuestionWithAnswersFromDb" InsertMethod="AddQuestionWithAnswers" SelectMethod="GetQuestionWithAnswers" TypeName="Business.GameMaster" UpdateMethod="AddQuestionWithAnswers" OldValuesParameterFormatString="{0}">
             <DeleteParameters>
-                <asp:Parameter Name="Id" Type="Int64" />
+                <asp:Parameter Name="id" Type="Int64" />
             </DeleteParameters>
             <InsertParameters>
                 <asp:Parameter Name="questionWithAnswers" Type="Object" />

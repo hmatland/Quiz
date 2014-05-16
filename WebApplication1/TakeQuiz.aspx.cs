@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 using System.Web.UI.WebControls;
 using Business;
 using DataObject;
@@ -10,9 +11,9 @@ namespace Presentation
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
-        private long _gameId;
-        private long _quizId;
+        private Game _game;
         private long _questionId;
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,9 +24,8 @@ namespace Presentation
             }
             else
             {
-                _gameId = (long)ViewState["gameId"];
-                _quizId = (long) ViewState["quizId"];
-                _questionId = (long)ViewState["questionId"];
+                _game = (Game) ViewState["game"];
+                _questionId = (long) ViewState["questionId"];
             }
 
             
@@ -33,18 +33,20 @@ namespace Presentation
 
         protected void StartNewQuizGame()
         {
+            long quizId;
+            _game = new Game();
             
-            var isParsed = long.TryParse(Request.QueryString["quizId"], out _quizId);
+            var isParsed = long.TryParse(Request.QueryString["quizId"], out quizId);
             if (isParsed)
             {
-                _gameId = -1;
-                ViewState.Add("quizId", _quizId);
-                ViewState.Add("gameId", _gameId);
-                var questionWithAnswers = GameMaster.GetNextQuestionWithAnswers(_quizId, 0);
+                _game.QuizId = quizId;
+                _game.Score = 0;
+                _questionId = 0;
+                var questionWithAnswers = GameMaster.GetNextQuestionWithAnswers(_game.QuizId, _questionId);
                 if (questionWithAnswers != null)
                 {
                     FillInQuestionAndAnswers(questionWithAnswers);
-                    ViewState.Add("questionId", questionWithAnswers.Id);
+                    _questionId = questionWithAnswers.Id;
                 }
                 else
                 {
@@ -53,8 +55,12 @@ namespace Presentation
             }
             else
             {
-                Question.Text = "QuizID: " + _quizId + " is not an valid ID";
+                Question.Text = "QuizID: " + quizId + " is not an valid ID";
+            
             }
+            ViewState.Add("game", _game);
+            ViewState.Add("questionId", _questionId);
+
         }
 
         protected void FillInQuestionAndAnswers(QuestionWithAnswers questionWithAnswers) 
@@ -85,21 +91,17 @@ namespace Presentation
 
             var answerId = long.Parse(commandArgument);
             var isCorrect = GameMaster.IsAnswerCorrect(answerId);
-            
-            if (_gameId == -1)
-            {
-                _gameId = GameMaster.InitializeGame(_quizId, isCorrect);
-                ViewState.Add("gameId", _gameId);
-            }
-            else
-            {
-                GameMaster.UpdateGame(_gameId,isCorrect);   
-            }
-            
+            if (isCorrect)
+                _game.Score += 1;
+           
             Information.Text = "The answer: " + ((Button)sender).Text + " is: " + isCorrect;
-            var questionWithAnswers = GameMaster.GetNextQuestionWithAnswers(_quizId, _questionId);
+            var questionWithAnswers = GameMaster.GetNextQuestionWithAnswers(_game.QuizId, _questionId);
+            ViewState.Add("game", _game);
             if (questionWithAnswers == null)
-                QuizComplete(_quizId);
+            {
+                ViewState.Add("questionId", (long)-1);
+                QuizComplete();              
+            }
             else
             {
                 ViewState.Add("questionId", questionWithAnswers.Id);
@@ -108,16 +110,15 @@ namespace Presentation
                 
         }
 
-        protected void QuizComplete(long quizId)
+        protected void QuizComplete()
         {
-            Question.Text = "Quiz: " + quizId +" has been completed!\n";
+            Question.Text = "Quiz: " + _game.QuizId +" has been completed!\n";
             Answer1.Visible = false;
             Answer2.Visible = false;
             Answer3.Visible = false;
             Answer4.Visible = false;
-            var game = GameMaster.GetGame(_gameId);
             GameOver.Visible = true;
-            GameOver.Text = "All questions are answered. Your score is: " + game.Score;
+            GameOver.Text = "All questions are answered. Your score is: " + _game.Score;
         }
 
         protected void Quit_Quiz(object sender, EventArgs e)
@@ -125,9 +126,17 @@ namespace Presentation
             Response.Redirect("default.aspx");
         }
 
-        protected void SaveHighScore(object sender, EventArgs e)
+        protected void SaveGame(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                _game.UserId = GameMaster.GetUserId(HttpContext.Current.User.Identity.Name);
+                GameMaster.SaveGame(_game);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
     }

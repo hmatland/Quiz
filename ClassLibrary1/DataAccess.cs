@@ -11,35 +11,65 @@ namespace DataAccess
     {
         private const string ConnectionString = "Data Source=(local);Initial Catalog=QuizDB;Integrated Security=SSPI";
 
+        public static void SaveGameToDb(Game game)
+        {
+            var tableAdapter = new GameTableAdapter();
+            tableAdapter.Insert(game.UserId, game.Score, game.QuizId);
+        }
 
-        public static void DeleteQuestionFromDb(long questionId) 
+        public static List<Game> GetHighScoreList(long quizId)
+        {
+            var tableAdapter = new GameTableAdapter();
+            var dataTable = tableAdapter.GetTopTenGames(quizId);
+            var list = new List<Game>();
+            foreach (var row in dataTable)
+            {
+                var game = new Game()
+                {
+                    Id = row.GameId,
+                    QuizId = row.QuizId,
+                    Score = row.Score,
+                };
+                if (row.IsNull("UserId"))
+                {
+                    game.UserId = null;
+                    game.UserName = null;
+                }
+                else
+                {
+                    game.UserId = row.UserId;
+                    game.UserName = GetUserName(row.UserId);
+                }
+                list.Add(game);
+
+            }
+            return list;
+        }
+
+        public static string GetUserName(long userId)
+        {
+            var tableAdapter = new UserTableAdapter();
+            var result = tableAdapter.GetUserName(userId);
+            foreach (var row in result)
+            {
+                return row.Name;
+            }
+            return null;
+        }
+
+        public static void DeleteQuestionWithAnswersFromDb(long questionId) 
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                connection.Open();
+                connection.Open(); 
                 var cmd =
-                    new SqlCommand("DELETE FROM Question WHERE QuestionId =@questionid",
-                        connection);
+                    new SqlCommand("DeleteQuestionWithAnswers",
+                        connection) {CommandType = CommandType.StoredProcedure};
                 cmd.Parameters.Add("@questionid", SqlDbType.BigInt).Value = questionId;
                 cmd.Prepare();
                 cmd.ExecuteNonQuery();
             }
         }
-
-        public static void DeleteAllAnswers(long questionId)
-        {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                var cmd =
-                    new SqlCommand("DELETE FROM Answer WHERE QuestionId = @questionid",
-                        connection);
-                cmd.Parameters.Add("@questionid", SqlDbType.BigInt).Value = questionId;
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
-            }
-        }
-
             
         public static long AddGameToDb(long quizId, int score)
         {
@@ -154,31 +184,29 @@ namespace DataAccess
 
         public static Answer GetAnswer(long answerId)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            var tableAdapter = new AnswerTableAdapter();
+            var answerDataTable = tableAdapter.SelectAnswer(answerId);
+
+            foreach (var dataRow in answerDataTable)
             {
-                connection.Open();
-                var questionCmd = new SqlCommand("SELECT * FROM Answer WHERE AnswerId = @ID",
-                    connection);
-                questionCmd.Parameters.Add(@"ID", SqlDbType.BigInt).Value = answerId;
-                questionCmd.Prepare();
-                var reader = questionCmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    var answer = new Answer
-                    {
-                        ID = answerId,
-                        answerText = (string) reader["Text"],
-                        isCorrect = (Boolean) reader["IsCorrect"],
-                        questionID = (long) reader["QuestionID"]
-                    };
-                    return answer;
-                }
-                return null;
+               var answer = new Answer
+               {
+                   ID = answerId,
+                   answerText = dataRow.Text,
+                   isCorrect = dataRow.IsCorrect,
+                   questionID = dataRow.QuestionId
+               };
+                return answer;
             }
+            
+            return null;
+            
         }
 
         public static Game GetGame(long gameId)
         {
+            var tableAdapter = new GameTableAdapter();
+            var gameDataTable = tableAdapter.GetData();
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();

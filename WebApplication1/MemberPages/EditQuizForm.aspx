@@ -50,7 +50,7 @@
         </asp:GridView>
         <asp:ObjectDataSource ID="ObjectDataSourceQuestions" runat="server" DeleteMethod="DeleteQuestionWithAnswersFromDb" SelectMethod="GetQuestionWithAnswers" TypeName="Business.GameMaster">
             <DeleteParameters>
-                <asp:Parameter Name="Id" Type="Int64" />
+                <asp:Parameter Name="id" Type="Int64" />
             </DeleteParameters>
             <SelectParameters>
                 <asp:QueryStringParameter DefaultValue="" Name="quizId" QueryStringField="quizId" Type="Int64" />
