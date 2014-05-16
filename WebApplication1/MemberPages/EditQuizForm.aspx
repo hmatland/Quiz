@@ -46,15 +46,15 @@
                 <asp:BoundField DataField="QuestionText" HeaderText="QuestionText" SortExpression="QuestionText" />
                 <asp:BoundField DataField="QuizId" HeaderText="QuizId" SortExpression="QuizId" />
                 <asp:TemplateField HeaderText="Answers">
-                   <ItemTemplate>
-                       <asp:DataList runat="server" ID="DataList1"    RepeatDirection="Horizontal" >
-                       <ItemTemplate>
-                       <%# Container.DataItem.ToString() %>
+                    <ItemTemplate>
+                        <!--<%# Container.DataItem.ToString() %>-->
+                        <asp:BulletedList ID="blAnswer" Runat="server">
 
-                       </ItemTemplate>
-                       </asp:DataList>
-                   </ItemTemplate>
-               </asp:TemplateField>
+                        </asp:BulletedList>
+
+                    </ItemTemplate>
+
+                </asp:TemplateField>
                 
             </Columns>
         </asp:GridView>

@@ -83,11 +83,14 @@ namespace Presentation.MemberPages
             if (e.Row.RowIndex != -1)
             {
                 var question = e.Row.DataItem as QuestionWithAnswers;
-                var dataList = e.Row.FindControl("DataList1") as DataList;
-                dataList.DataSource = question.Answers;
 
-                dataList.DataBind();
+               // var dataList = e.Row.FindControl("DataList1") as DataList;
+                //dataList.DataSource = question.Answers;
+                //dataList.DataBind();
 
+                BulletedList bl = (BulletedList)e.Row.FindControl("blAnswer") as BulletedList;
+                bl.DataSource = question.Answers;
+                bl.DataBind();
             }
 
 
