@@ -13,7 +13,7 @@ namespace Presentation.MemberPages
         protected void Page_Load(object sender, EventArgs e)
         {
             long quizId;
-            bool quizIdParsed = long.TryParse(Request.QueryString["quizId"],out quizId);
+            bool quizIdParsed = long.TryParse(Request.QueryString["quizId"], out quizId);
             long userId = GameMaster.GetUserId(Membership.GetUser().UserName);
             bool isRightUser = GameMaster.CheckIfRightUser(quizId, userId);
             if (!isRightUser)
@@ -27,11 +27,11 @@ namespace Presentation.MemberPages
                 Response.Redirect("~/default.aspx");
             }
 
-           /* var quizesOwnedByUser = GameMaster.GetQuizes(Membership.GetUser().UserName);
-            foreach (var quiz in quizesOwnedByUser)
-            {
-                QuizDropDownList.Items.Add(new ListItem(quiz.Quizname,quiz.Id.ToString()));
-            }*/
+            /* var quizesOwnedByUser = GameMaster.GetQuizes(Membership.GetUser().UserName);
+             foreach (var quiz in quizesOwnedByUser)
+             {
+                 QuizDropDownList.Items.Add(new ListItem(quiz.Quizname,quiz.Id.ToString()));
+             }*/
         }
 
         protected void SubmitQuestionWithAnswers(object sender, EventArgs e)
@@ -65,7 +65,7 @@ namespace Presentation.MemberPages
             };
             long quizId = long.Parse(Request.QueryString["quizId"]);
             GameMaster.AddQuestionWithAnswers(questionWithAnswers, quizId);
-            Server.Transfer("EditQuizForm.aspx?quizId="+quizId);
+            Server.Transfer("EditQuizForm.aspx?quizId=" + quizId);
         }
 
         protected void Back_Click(object sender, EventArgs e)
@@ -78,7 +78,23 @@ namespace Presentation.MemberPages
 
         }
 
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowIndex != -1)
+            {
+                var question = e.Row.DataItem as QuestionWithAnswers;
+
+               // var dataList = e.Row.FindControl("DataList1") as DataList;
+                //dataList.DataSource = question.Answers;
+                //dataList.DataBind();
+
+                BulletedList bl = (BulletedList)e.Row.FindControl("blAnswer") as BulletedList;
+                bl.DataSource = question.Answers;
+                bl.DataBind();
+            }
 
 
+
+        }
     }
 }

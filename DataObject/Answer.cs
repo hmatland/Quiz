@@ -12,5 +12,10 @@ namespace DataObject
         public string answerText { get; set; }
         public Boolean isCorrect { get; set; }
         public long questionID { get; set; }
+
+        public override string ToString()
+        {
+            return answerText;
+        }
     }
 }
