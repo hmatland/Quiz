@@ -22,7 +22,7 @@
         </asp:DropDownList>
         <br />
         <br />
-         <asp:Button ID="TakeQuiz" runat="server" Text="Take quiz" OnClick ="goToTakeQuiz" />
+         <asp:Button ID="TakeQuiz" runat="server" CssClass="mainMenuButton" Text="Take quiz" OnClick ="goToTakeQuiz" />
         <br />
         <br />
         <asp:LoginView ID="LoginView1" runat="server">

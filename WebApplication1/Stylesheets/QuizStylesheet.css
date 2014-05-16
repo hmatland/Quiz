@@ -1,5 +1,5 @@
 ﻿body {
-    background-color: #0F2E4C;
+    background-color: #D3DBE4;
 }
 
 #questionDiv {
@@ -12,34 +12,73 @@
     margin-right:auto;  
 }
 
-#buttonGroup{
+#questionButtonGroup{
     width: 710px;
     margin-left: auto;
-    margin-right:auto;   
+    margin-right:auto;
+    height: 80%;   
     }
-.buttons {
-    background-color: #808080;
-    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-    background-image: linear-gradient(to bottom, #3498db, #2980b9);
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius:6px;
-    color: #fff;
-    font-family: 'Oswald';
-    font-size: 20px;
-    text-decoration: none;
-    cursor: pointer;
-    border: solid #4a555c 2px;
-}
 
-.buttons:hover {
-    background: #3cb0fd;
-    background-image: -webkit-linear-gradient(top, #3cb0fd, #808080);
-    background-image: -moz-linear-gradient(top, #3cb0fd, #808080);
-    background-image: -ms-linear-gradient(top, #3cb0fd, #808080);
-    background-image: -o-linear-gradient(top, #3cb0fd, #808080);
-    background-image: linear-gradient(top, #3cb0fd, #808080);
-    text-decoration: none;
+.questionButtons {
+	-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #1578db) );
+	background:-moz-linear-gradient( center top, #79bbff 5%, #1578db 100% );
+	background-color:#79bbff;
+	border:1px solid #84bbf3;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+	height:40px;
+	line-height:40px;
+	width:200px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #4699eb;
+}
+.questionButtons:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #1578db), color-stop(1, #79bbff) );
+	background:-moz-linear-gradient( center top, #1578db 5%, #79bbff 100% );
+	background-color:#1578db;
+}
+    .questionButtons:active {
+        position: relative;
+        top: 1px;
     }
+
+
+.mainMenuButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #d9fbbe;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #d9fbbe;
+	box-shadow:inset 0px 1px 0px 0px #d9fbbe;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #b8e356), color-stop(1, #a5cc52) );
+	background:-moz-linear-gradient( center top, #b8e356 5%, #a5cc52 100% );
+	background-color:#b8e356;
+	border:1px solid #83c41a;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+	height:40px;
+	line-height:40px;
+	width:200px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #86ae47;
+}
+.mainMenuButton:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #a5cc52), color-stop(1, #b8e356) );
+	background:-moz-linear-gradient( center top, #a5cc52 5%, #b8e356 100% );
+	background-color:#a5cc52;
+}
+.mainMenuButtons:active {
+        position: relative;
+        top: 1px;
+    }
+
