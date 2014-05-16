@@ -33,7 +33,7 @@
 	font-size:15px;
 	font-weight:bold;
 	font-style:normal;
-	height:40px;
+	height:70px;
 	line-height:40px;
 	width:200px;
 	text-decoration:none;
@@ -45,12 +45,16 @@
 	background:-moz-linear-gradient( center top, #1578db 5%, #79bbff 100% );
 	background-color:#1578db;
 }
-    .questionButtons:active {
+.questionButtons:active {
         position: relative;
         top: 1px;
     }
 
-
+#mainMenuDiv {
+    margin-left:auto;
+    margin-right:auto;
+    width:35%;
+}
 .mainMenuButton {
 	-moz-box-shadow:inset 0px 1px 0px 0px #d9fbbe;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #d9fbbe;
@@ -67,7 +71,7 @@
 	font-style:normal;
 	height:40px;
 	line-height:40px;
-	width:200px;
+	width:300px;
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #86ae47;
