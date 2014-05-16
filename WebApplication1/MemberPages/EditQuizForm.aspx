@@ -39,19 +39,33 @@
         <br />
         <br />
         <br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSourceQuestions" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSourceQuestions" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowDataBound="GridView1_RowDataBound">
             <Columns>
                 <asp:CommandField ShowDeleteButton="True" />
                 <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" />
                 <asp:BoundField DataField="QuestionText" HeaderText="QuestionText" SortExpression="QuestionText" />
                 <asp:BoundField DataField="QuizId" HeaderText="QuizId" SortExpression="QuizId" />
+                <asp:TemplateField HeaderText="Answers">
+                   <ItemTemplate>
+                       <asp:DataList runat="server" ID="DataList1"    RepeatDirection="Horizontal" >
+                       <ItemTemplate>
+                       <%# Container.DataItem.ToString() %>
+
+                       </ItemTemplate>
+                       </asp:DataList>
+                   </ItemTemplate>
+               </asp:TemplateField>
                 
             </Columns>
         </asp:GridView>
-        <asp:ObjectDataSource ID="ObjectDataSourceQuestions" runat="server" DeleteMethod="DeleteQuestionWithAnswersFromDb" SelectMethod="GetQuestionWithAnswers" TypeName="Business.GameMaster">
+        <asp:ObjectDataSource ID="ObjectDataSourceQuestions" runat="server" DeleteMethod="DeleteQuestionWithAnswersFromDb" SelectMethod="GetQuestionWithAnswers" TypeName="Business.GameMaster" InsertMethod="AddQuestionWithAnswers">
             <DeleteParameters>
                 <asp:Parameter Name="Id" Type="Int64" />
             </DeleteParameters>
+            <InsertParameters>
+                <asp:Parameter Name="questionWithAnswers" Type="Object" />
+                <asp:Parameter Name="quizId" Type="Int64" />
+            </InsertParameters>
             <SelectParameters>
                 <asp:QueryStringParameter DefaultValue="" Name="quizId" QueryStringField="quizId" Type="Int64" />
             </SelectParameters>
