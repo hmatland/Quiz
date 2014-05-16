@@ -15,7 +15,7 @@ namespace DataObject
 
         public override string ToString()
         {
-            return answerText;
+            return answerText+": "+isCorrect;
         }
     }
 }
