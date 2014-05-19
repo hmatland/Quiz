@@ -118,7 +118,7 @@ namespace Presentation
             Answer3.Visible = false;
             Answer4.Visible = false;
             GameOver.Visible = true;
-            GameOver.Text = "All questions are answered. Your score is: " + _game.Score;
+            GameOver.Text = "All questions are answered. Your score is: " + _game.Score+"\n Press this button to save to highscore";
         }
 
         protected void Quit_Quiz(object sender, EventArgs e)
@@ -132,6 +132,7 @@ namespace Presentation
             {
                 _game.UserId = GameMaster.GetUserId(HttpContext.Current.User.Identity.Name);
                 GameMaster.SaveGame(_game);
+                Response.Redirect("default.aspx");
             }
             else
             {
