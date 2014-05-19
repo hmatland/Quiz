@@ -9,13 +9,19 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <div id="login">
+            <asp:LoginStatus ID="LoginStatus1" runat="server" />   
+        </div>
+         
     <div id="mainMenuDiv">
-    
-        <asp:Label ID="welcomeLabel" runat="server" Text="TestDefaultPage"></asp:Label>
-        <br />
-        <br />
-        <asp:LoginStatus ID="LoginStatus1" runat="server" />
-    
+        <asp:LoginView ID="LoginView2" runat="server">
+            <AnonymousTemplate>
+                <h1>Welcome</h1>
+            </AnonymousTemplate>
+            <LoggedInTemplate>
+                <h1>Welcome <asp:LoginName ID="LoginName1" runat="server" />.</h1>
+            </LoggedInTemplate>
+        </asp:LoginView> 
         <br />
         <br />
         <asp:DropDownList ID="ChooseQuizDropDown" runat="server" DataTextField="Quizname" DataValueField="Id" Width="300px">
@@ -23,8 +29,7 @@
         <br />
          <asp:Button ID="TakeQuiz" runat="server" CssClass="mainMenuButton" Text="Take quiz" OnClick ="goToTakeQuiz" />
         <br />
-        <br />
-        
+        <br />        
         <asp:LoginView ID="LoginView1" runat="server">
             <AnonymousTemplate>
                 <asp:Button ID="Register" runat="server" CssClass="mainMenuButton" OnClick="goToRegisterPage" Text="Register" />
@@ -36,13 +41,11 @@
                 <asp:DropDownList ID="EditQuizDropDown" runat="server" DataTextField="Quizname" DataValueField="Id" Width="300px">
                 </asp:DropDownList>
                 <br />
-                <br />
                 <asp:Button ID="editQuiz" runat="server" CssClass="mainMenuButton" Text="Edit Quiz" OnClick="editQuiz_Click" />
             </LoggedInTemplate>
         </asp:LoginView>
         <br />
-        <br />
-    
+        <br />    
     </div>
     </form>
 </body>

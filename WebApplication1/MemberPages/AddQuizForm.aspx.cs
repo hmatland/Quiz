@@ -30,7 +30,9 @@ namespace Presentation.MemberPages
             Response.Redirect("EditQuizForm.aspx");
         }
 
-        
-
+        protected void Back_button_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/default.aspx");
+        }
     }
 }

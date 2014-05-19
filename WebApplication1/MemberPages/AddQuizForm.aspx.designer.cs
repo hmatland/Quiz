@@ -13,6 +13,15 @@ namespace Presentation.MemberPages {
     public partial class AddQuizForm {
         
         /// <summary>
+        /// Link1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlLink Link1;
+        
+        /// <summary>
         /// AddNewQuiz control.
         /// </summary>
         /// <remarks>
@@ -56,5 +65,14 @@ namespace Presentation.MemberPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button SubmitQuizButton;
+        
+        /// <summary>
+        /// Back_button control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Back_button;
     }
 }

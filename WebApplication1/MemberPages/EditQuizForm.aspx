@@ -12,7 +12,7 @@
     <div>
         <h1>Welcome <asp:LoginName ID="LoginName1" runat="server" />.</h1>
         <p>
-            You are adding a question to:&nbsp;&nbsp; <asp:Label ID="QuizName" runat="server" Text="Label"></asp:Label>
+            You are adding a question to: <asp:Label ID="QuizName" runat="server" Text="Label"></asp:Label>
         </p><br />
         <asp:Label ID="QuestionLabel" runat="server" Text="Enter question: "></asp:Label>
         <asp:TextBox ID="QuestionTextBox" runat="server" Width="373px"></asp:TextBox>
@@ -33,7 +33,7 @@
         <asp:TextBox ID="WrongTextBox3" runat="server" Width="353px"></asp:TextBox>
     
         <br />
-        <asp:Button ID="SubmitButton" CssClass="buttons" runat="server" Text="Add question with answers to DB" Width="319px" OnClick="SubmitQuestionWithAnswers" />
+        <asp:Button ID="SubmitButton" CssClass="mainMenuButton" runat="server" Text="Add question with answers to DB" Width="319px" OnClick="SubmitQuestionWithAnswers" />
     
         <br />
         <br />
@@ -49,13 +49,9 @@
                     <ItemTemplate>
                         <!--<%# Container.DataItem.ToString() %>-->
                         <asp:BulletedList ID="blAnswer" Runat="server">
-
                         </asp:BulletedList>
-
                     </ItemTemplate>
-
-                </asp:TemplateField>
-                
+                </asp:TemplateField>                
             </Columns>
         </asp:GridView>
         <asp:ObjectDataSource ID="ObjectDataSourceQuestions" runat="server" DeleteMethod="DeleteQuestionWithAnswersFromDb" SelectMethod="GetQuestionWithAnswers" TypeName="Business.GameMaster" InsertMethod="AddQuestionWithAnswers">
@@ -69,10 +65,9 @@
             <SelectParameters>
                 <asp:QueryStringParameter DefaultValue="" Name="quizId" QueryStringField="quizId" Type="Int64" />
             </SelectParameters>
-        </asp:ObjectDataSource>
-    
+        </asp:ObjectDataSource>    
         <br />
-        <asp:Button ID="Back" runat="server" OnClick="Back_Click" Text="Back" />
+        <asp:Button ID="Back" runat="server" CssClass= "quitButton" OnClick="Back_Click" Text="Back" />
         <br />
     
     </div>
