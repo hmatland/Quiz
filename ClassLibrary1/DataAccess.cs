@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using DataAccess.DataSetTableAdapters;
 using DataObject;
 
@@ -57,8 +58,12 @@ namespace DataAccess
             return null;
         }
 
-        public static void DeleteQuestionWithAnswersFromDb(long questionId) 
+        public static void DeleteQuestionWithAnswersFromDb(long questionId)
         {
+            var tableAdapter = new QuestionTableAdapter();
+            tableAdapter.DeleteQuestionWithAnswers(questionId);
+            
+            /*Old version with stored procedure, may be removed if tableAdapter works as it should.
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open(); 
@@ -68,38 +73,18 @@ namespace DataAccess
                 cmd.Parameters.Add("@questionid", SqlDbType.BigInt).Value = questionId;
                 cmd.Prepare();
                 cmd.ExecuteNonQuery();
-            }
+            }*/
         }
             
-        public static long AddGameToDb(long quizId, int score)
-        {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                var cmd =
-                    new SqlCommand("INSERT INTO Game (Score, QuizId) Output INSERTED.GameId VALUES (@Score, @QuizId)",
-                        connection);
-                cmd.Parameters.Add("@QuizId", SqlDbType.BigInt).Value = quizId;
-                cmd.Parameters.Add("@Score", SqlDbType.Int).Value = score;
-                cmd.Prepare();
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    return (long)reader["GameId"];
-                }
-            }
-            return -1;
-        }
-
         public static void AddNewQuizToDb(Quiz quiz)
         {
             var tableAdapter = new QuizTableAdapter();
             tableAdapter.Insert(quiz.Quizname, quiz.MadeById);
         }
 
-        public static void AddQuestionWithAnswersToDb(QuestionWithAnswers questionWithAnswers, long quizId)
+        /*public static void AddQuestionWithAnswersToDb(QuestionWithAnswers questionWithAnswers, long quizId)
         {
-            AddQuestiontoDb(questionWithAnswers.QuestionText, quizId);
+            AddQuestionToDb(questionWithAnswers.QuestionText, quizId);
             var questionId = GetIdOfQuestionText(questionWithAnswers.QuestionText);
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -117,11 +102,14 @@ namespace DataAccess
                     answerCmd.ExecuteNonQuery();
                 }
             }
-        }
+        }*/
 
-        public static void AddQuestiontoDb(string questionText, long quizId)
+        public static void AddQuestionToDb(string questionText, long quizId)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            var tableAdapter = new QuestionTableAdapter();
+            tableAdapter.Insert(questionText, quizId);
+            
+            /*using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 var questionCmd = new SqlCommand("INSERT INTO Question (Text, QuizId) VALUES (@Text, @QuizId)",
@@ -130,71 +118,50 @@ namespace DataAccess
                 questionCmd.Parameters.Add(@"QuizId", SqlDbType.BigInt).Value = quizId;
                 questionCmd.Prepare();
                 questionCmd.ExecuteNonQuery();
-            }
+            }*/
         }
 
-        public static void AddUserIdToGame(long gameId, long userId)
+        public static void AddAnswerToDb(Answer answer)
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                var cmd = new SqlCommand("UPDATE Game SET UserId = @UserId WHERE GameId = @GameId", connection);
-                cmd.Parameters.Add("@GameId", SqlDbType.BigInt).Value = gameId;
-                cmd.Parameters.Add("@UserId", SqlDbType.BigInt).Value = userId;
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
-            }
+            var tableAdapter = new AnswerTableAdapter();
+            tableAdapter.Insert(answer.answerText, answer.isCorrect, answer.questionID);
         }
 
         public static void AddUserNameToQuizDb(string username)
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                var questionCmd = new SqlCommand("INSERT INTO [User] (Name) VALUES (@Name)",
-                    connection);
-                questionCmd.Parameters.Add(@"Name", SqlDbType.VarChar, 50).Value = username;
-                questionCmd.Prepare();
-                questionCmd.ExecuteNonQuery();
-            }
+            var tableAdapter = new UserTableAdapter();
+            tableAdapter.Insert(username);
         }
 
-        public static List<Quiz> GetAllQuizes()
+        public static IEnumerable<Quiz> GetAllQuizes()
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            var tableAdapter = new QuizTableAdapter();
+            var dataTable = tableAdapter.GetData();
+            foreach (var row in dataTable)
             {
-                var quizes = new List<Quiz>();
-                connection.Open();
-                var getAllCmd = new SqlCommand("SELECT * FROM Quiz", connection);
-                getAllCmd.Prepare();
-                SqlDataReader reader = getAllCmd.ExecuteReader();
-                while (reader.Read())
+                var quiz = new Quiz
                 {
-                    var quiz = new Quiz
-                    {
-                        Id = (long) reader["QuizId"],
-                        MadeById = (long) reader["UserId"],
-                        Quizname = (string) reader["Name"]
-                    };
-                    quizes.Add(quiz);
-                }
-                return quizes;
+                    Id = row.QuizId,
+                    MadeById = row.UserId,
+                    Quizname = row.Name
+                };
+                yield return quiz;
             }
         }
 
         public static Answer GetAnswer(long answerId)
         {
             var tableAdapter = new AnswerTableAdapter();
-            var answerDataTable = tableAdapter.SelectAnswer(answerId);
+            var dataTable = tableAdapter.SelectAnswer(answerId);
 
-            foreach (var dataRow in answerDataTable)
+            foreach (var row in dataTable)
             {
                var answer = new Answer
                {
                    ID = answerId,
-                   answerText = dataRow.Text,
-                   isCorrect = dataRow.IsCorrect,
-                   questionID = dataRow.QuestionId
+                   answerText = row.Text,
+                   isCorrect = row.IsCorrect,
+                   questionID = row.QuestionId
                };
                 return answer;
             }
@@ -205,8 +172,7 @@ namespace DataAccess
 
         public static Game GetGame(long gameId)
         {
-            var tableAdapter = new GameTableAdapter();
-            var gameDataTable = tableAdapter.GetData();
+          
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -214,13 +180,16 @@ namespace DataAccess
                 quizCmd.Parameters.Add("@GameId", SqlDbType.BigInt).Value = gameId;
                 quizCmd.Prepare();
                 var reader = quizCmd.ExecuteReader();
-                var game = new Game();
+                
                 while (reader.Read())
                 {
-                    game.UserId = reader["UserId"] as int?;
-                    game.QuizId = (long) reader["QuizId"];
-                    game.Score = (int) reader["Score"];
-                    game.Id = (long) reader["GameId"];
+                    var game = new Game
+                    {
+                        UserId = reader["UserId"] as int?,
+                        QuizId = (long) reader["QuizId"],
+                        Score = (int) reader["Score"],
+                        Id = (long) reader["GameId"]
+                    };
                     return game;
                 }
                 return null;
@@ -295,7 +264,22 @@ namespace DataAccess
             return null;
         }
 
-        public static List<QuestionWithAnswers> GetQuestions(long quizId) {
+        public static List<QuestionWithAnswers> GetQuestions(long quizId)
+        {
+            var tableAdapter = new QuestionTableAdapter();
+            var dataTable = tableAdapter.GetQuestions(quizId);
+            var questions = new List<QuestionWithAnswers>();
+            foreach (var row in dataTable)
+            {
+                var question = new QuestionWithAnswers
+                {
+                    Id = row.QuestionId,
+                    QuestionText = row.Text,
+                    QuizId = row.QuizId
+                };
+                questions.Add(question);
+            }
+            return questions;
 
             using (var connection = new SqlConnection(ConnectionString))
             {

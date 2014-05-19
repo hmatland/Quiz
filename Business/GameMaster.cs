@@ -45,7 +45,12 @@ namespace Business
 
         public static void AddQuestionWithAnswers(QuestionWithAnswers questionWithAnswers, long quizId)
         {
-            DataAccessMachine.AddQuestionWithAnswersToDb(questionWithAnswers, quizId);
+            DataAccessMachine.AddQuestionToDb(questionWithAnswers.QuestionText,quizId);
+            foreach ( var answer in questionWithAnswers.Answers)
+            {
+                DataAccessMachine.AddAnswerToDb(answer);
+            }
+            
         }
 
         public static List<Quiz> GetQuizes(string username)
@@ -53,9 +58,10 @@ namespace Business
             var userId = DataAccessMachine.GetUserId(username);
             return DataAccessMachine.GetQuizes(userId);
         }
+
         public static List<Quiz> GetAllQuizes() 
         {
-            return DataAccessMachine.GetAllQuizes();
+            return DataAccessMachine.GetAllQuizes().ToList();
         }
 
         public static long GetUserId(string username)
@@ -73,18 +79,6 @@ namespace Business
             DataAccessMachine.AddNewQuizToDb(quiz);
         }
 
-        public static long InitializeGame(long quizId, bool correctFirstAnswer)
-        {
-            var gameId = DataAccessMachine.AddGameToDb(quizId, 0);
-            DataAccessMachine.IncrementGameScore(gameId);
-            return gameId;
-        }
-
-        public static void IncrementGameScore(long gameId)
-        {
-            DataAccessMachine.IncrementGameScore(gameId);
-        }
-
         public static void SaveGame(Game game)
         {
             DataAccessMachine.SaveGameToDb(game);
@@ -94,14 +88,6 @@ namespace Business
         {
             return DataAccessMachine.GetHighScoreList(quizId);
         } 
-
-        public static void UpdateGame(long gameId, bool isCorrect)
-        {
-            if (isCorrect)
-            {
-                IncrementGameScore(gameId);
-            }
-        }
 
         public static Game GetGame(long gameId)
         {
