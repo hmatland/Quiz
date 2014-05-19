@@ -28,7 +28,7 @@
 
             <asp:Button ID="Quit" runat="server" Text="Quit" OnClick ="Quit_Quiz"/>
                         
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="GameDataSource">
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="GameDataSource" CssClass="Grid" PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt" Width="700px">
                 <Columns>
                     <asp:BoundField DataField="UserName" HeaderText="Username" SortExpression="UserName" />
                     <asp:BoundField DataField="Score" HeaderText="Score" SortExpression="Score" />

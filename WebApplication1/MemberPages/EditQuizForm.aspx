@@ -39,7 +39,7 @@
         <br />
         <br />
         <br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSourceQuestions" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowDataBound="GridView1_RowDataBound">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSourceQuestions" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowDataBound="GridView1_RowDataBound" CssClass="Grid" PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt">
             <Columns>
                 <asp:CommandField ShowDeleteButton="True" />
                 <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" />

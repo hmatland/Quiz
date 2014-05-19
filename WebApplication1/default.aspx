@@ -18,9 +18,8 @@
     
         <br />
         <br />
-        <asp:DropDownList ID="ChooseQuizDropDown" runat="server" DataTextField="Quizname" DataValueField="Id">
+        <asp:DropDownList ID="ChooseQuizDropDown" runat="server" DataTextField="Quizname" DataValueField="Id" Width="300px">
         </asp:DropDownList>
-        <br />
         <br />
          <asp:Button ID="TakeQuiz" runat="server" CssClass="mainMenuButton" Text="Take quiz" OnClick ="goToTakeQuiz" />
         <br />
@@ -28,17 +27,17 @@
         
         <asp:LoginView ID="LoginView1" runat="server">
             <AnonymousTemplate>
-                <asp:Button ID="Register" runat="server" OnClick="goToRegisterPage" Text="Register" />
+                <asp:Button ID="Register" runat="server" CssClass="mainMenuButton" OnClick="goToRegisterPage" Text="Register" />
             </AnonymousTemplate>
             <LoggedInTemplate>
                 <asp:Button ID="NewQuiz" runat="server" CssClass="mainMenuButton" Text="Make New Quiz" OnClick="newQuiz" />
                 <br />
                 <br />
-                <asp:DropDownList ID="EditQuizDropDown" runat="server" DataTextField="Quizname" DataValueField="Id">
+                <asp:DropDownList ID="EditQuizDropDown" runat="server" DataTextField="Quizname" DataValueField="Id" Width="300px">
                 </asp:DropDownList>
                 <br />
                 <br />
-                <asp:Button ID="editQuiz" runat="server" CssClass="mainMenuButton" Text="Edit Quiz" OnClick="editQuiz_Click" Width="100px" />
+                <asp:Button ID="editQuiz" runat="server" CssClass="mainMenuButton" Text="Edit Quiz" OnClick="editQuiz_Click" />
             </LoggedInTemplate>
         </asp:LoginView>
         <br />

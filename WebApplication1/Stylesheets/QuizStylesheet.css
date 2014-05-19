@@ -85,4 +85,39 @@
         position: relative;
         top: 1px;
     }
+.Grid { 
+    width: 70%; 
+    background-color: #fff; 
+    margin: 5px 0 10px 0; 
+    border: solid 1px #525252; 
+    border-collapse:collapse; 
+    margin-left:auto;
+    margin-right:auto;
+}
+.Grid td { 
+    padding: 2px; 
+    border: solid 1px #c1c1c1; 
+    color: #717171; 
+}
+.Grid th { 
+    padding: 4px 2px; 
+    color: #fff; 
+    background: #424242; 
+    border-left: solid 1px #525252; 
+    font-size: 0.9em; 
+}
+.Grid .alt { background: #fcfcfc; }
+.Grid .pgr { background: #424242; }
+.Grid .pgr table { margin: 5px 0; }
+.Grid .pgr td { 
+    border-width: 0; 
+    padding: 0 6px; 
+    border-left: solid 1px #666; 
+    font-weight: bold; 
+    color: #fff; 
+    line-height: 12px; 
+ }   
+.Grid .pgr a { color: #666; text-decoration: none; }
+.Grid .pgr a:hover { color: #000; text-decoration: none; }
+
 
