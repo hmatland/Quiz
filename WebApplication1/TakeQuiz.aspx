@@ -10,23 +10,22 @@
         <form id="form1" runat="server">
             <div>
                 <asp:Label ID="Information" runat="server"></asp:Label><br />
-
             </div>
             <div id="questionDiv">
                 <asp:Label ID="Question" Width="350px" runat="server">What is HelloKitty?</asp:Label>
             </div>
-
-            <p></p>
             <div id ="questionButtonGroup">           
             <asp:Button ID="Answer1" runat="server" CssClass="questionButtons" Text="Button" Width="350px" OnClick="Answer_Click"/>
             <asp:Button ID="Answer2" runat="server" CssClass="questionButtons" Text="Button" Width="350px" OnClick="Answer_Click"/><br />
             <asp:Button ID="Answer3" runat="server" CssClass="questionButtons" Text="Button" Width="350px" OnClick="Answer_Click"/>
             <asp:Button ID="Answer4" runat="server" CssClass="questionButtons" Text="Button" Width="350px" OnClick="Answer_Click"/>
-            <asp:Button ID="GameOver" runat="server" CssClass="questionButtons" Text="Button" Width="700px" OnClick="SaveGame" Visible="False"/>
-                
+            <asp:Button ID="GameOver" runat="server" CssClass="questionButtons" Text="Button" Width="700px" OnClick="SaveGame" Visible="False"/>                
             </div>
-
-            <asp:Button ID="Quit" runat="server" Text="Quit" OnClick ="Quit_Quiz"/>
+            <br />
+            <br />
+            <div id="quitDiv">
+            <asp:Button ID="Quit" runat="server" CssClass="quitButton" Text="Quit" OnClick ="Quit_Quiz"/>
+            </div>
                         
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="GameDataSource" CssClass="Grid" PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt" Width="700px">
                 <Columns>
@@ -38,8 +37,7 @@
                 <SelectParameters>
                     <asp:QueryStringParameter Name="quizId" QueryStringField="quizId" Type="Int64" />
                 </SelectParameters>
-            </asp:ObjectDataSource>
-                        
+            </asp:ObjectDataSource>                        
         </form>
     </body>
 </html>
