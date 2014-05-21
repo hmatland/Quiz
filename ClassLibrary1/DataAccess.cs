@@ -12,10 +12,12 @@ namespace DataAccess
     {
         private const string ConnectionString = "Data Source=(local);Initial Catalog=QuizDB;Integrated Security=SSPI";
 
-        public static void SaveGameToDb(Game game)
+        public static long? SaveGameToDb(Game game)
         {
+            long? insertedId = 0;
             var tableAdapter = new GameTableAdapter();
-            tableAdapter.Insert(game.UserId, game.Score, game.QuizId);
+            tableAdapter.Insert(game.UserId, game.Score, game.QuizId, ref insertedId);
+            return insertedId;
         }
 
         public static List<Game> GetHighScoreList(long quizId)
@@ -172,8 +174,23 @@ namespace DataAccess
 
         public static Game GetGame(long gameId)
         {
-          
-            using (var connection = new SqlConnection(ConnectionString))
+            var tableadapter = new GameTableAdapter();
+            var datatable = tableadapter.GetGame(gameId);
+            foreach (var row in datatable)
+            {
+                var game = new Game
+                {
+                    UserId = row.UserId,
+                    QuizId = row.QuizId,
+                    Score = row.Score,
+                    Id = gameId
+                };
+                return game;
+            }
+            return null;
+            
+
+            /*using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 var quizCmd = new SqlCommand("SELECT * FROM Game WHERE GameId = @GameId", connection);
@@ -193,12 +210,20 @@ namespace DataAccess
                     return game;
                 }
                 return null;
-            }
+            }*/
         }
 
         public static long GetIdOfQuestionText(string questionText)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            var tableAdapter = new QuestionTableAdapter();
+            var datatable = tableAdapter.GetIdFromQuestionText(questionText);
+            foreach(var row in datatable){
+                return row.QuestionId;
+            }
+            return -1;
+
+
+            /*using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 var questionCmd = new SqlCommand("SELECT QuestionId FROM Question WHERE Text = @Text",
@@ -211,12 +236,26 @@ namespace DataAccess
                     return (long) reader["QuestionId"];
                 }
                 return -1;
-            }
+            }*/
         }
 
         public static List<Answer> GetListOfAnswers(long questionId)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            var tableAdapter = new AnswerTableAdapter();
+            var dataTable = tableAdapter.GetListOfAnswers(questionId);
+            var answers = new List<Answer>();
+            foreach (var row in dataTable) { 
+                var answer = new Answer
+                {
+                    answerText = row.Text,
+                    ID = row.AnswerId,
+                    isCorrect = row.IsCorrect,
+                    questionID = questionId
+                };
+                answers.Add(answer);
+            }
+            return answers;
+            /*using (var connection = new SqlConnection(ConnectionString))
             {
                 var answers = new List<Answer>();
                 connection.Open();
@@ -237,12 +276,25 @@ namespace DataAccess
                     answers.Add(answer);
                 }
                 return answers;
-            }
+            }*/
         }
 
         public static QuestionWithAnswers GetNextQuestion(long quizId, long previousQuestionId)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            var tableAdapter = new QuestionTableAdapter();
+            var dataTable = tableAdapter.GetNextQuestion(previousQuestionId, quizId);
+            foreach (var row in dataTable) {
+                var questionWithAnswers = new QuestionWithAnswers
+                {
+                    Id = row.QuestionId,
+                    QuestionText = row.Text,
+                    QuizId = quizId
+                };
+                return questionWithAnswers;
+            }
+            return null;
+
+            /*using (var connection = new SqlConnection(ConnectionString))
             {
                 var questionWithAnswers = new QuestionWithAnswers();
                 connection.Open();
@@ -261,7 +313,7 @@ namespace DataAccess
                     return questionWithAnswers;
                 }
             }
-            return null;
+            return null;*/
         }
 
         public static List<QuestionWithAnswers> GetQuestions(long quizId)
@@ -280,34 +332,19 @@ namespace DataAccess
                 questions.Add(question);
             }
             return questions;
-
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                var listOfQuestions = new List<QuestionWithAnswers>();
-                
-                connection.Open();
-                var questionCmd = new SqlCommand("SELECT * FROM Question WHERE QuizId = @ID",
-                    connection);
-                questionCmd.Parameters.Add(@"ID", SqlDbType.BigInt).Value = quizId;
-                questionCmd.Prepare();
-                var reader = questionCmd.ExecuteReader();
-                while (reader.Read())
-                {
-                   var questionWithAnswers = new QuestionWithAnswers
-                   {
-                    Id = (long) reader["QuestionId"],
-                    QuestionText = (string) reader["Text"],
-                    QuizId = (long) reader["QuizId"]
-                   };
-                    listOfQuestions.Add(questionWithAnswers);
-                }  
-                return listOfQuestions;
-            }
         }
 
         public static string GetQuizName(long quizId)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            var tableAdapter = new QuizTableAdapter();
+            var dataTable = tableAdapter.GetQuizName(quizId);
+            foreach (var row in dataTable) 
+            {
+                return row.Name;
+            }
+            return "";
+            
+            /*using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 var quizCmd = new SqlCommand("SELECT Name FROM Quiz WHERE QuizId = @ID", connection);
@@ -319,12 +356,27 @@ namespace DataAccess
                     return (string) reader["Name"];
                 }
                 return "";
-            }
+            }*/
         }
 
         public static List<Quiz> GetQuizes(long userId)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            var tableAdapter = new QuizTableAdapter();
+            var dataTable = tableAdapter.GetQuizes(userId);
+            var quizes = new List<Quiz>();
+
+            foreach (var row in dataTable)
+            {
+                var quiz = new Quiz
+                {
+                    Id = row.QuizId,
+                    MadeById = userId,
+                    Quizname = row.Name
+                };
+                quizes.Add(quiz);
+            }
+            return quizes;
+            /*using (var connection = new SqlConnection(ConnectionString))
             {
                 var quizes = new List<Quiz>();
                 connection.Open();
@@ -344,12 +396,20 @@ namespace DataAccess
                     quizes.Add(quiz);
                 }
                 return quizes;
-            }
+            }*/
         }
 
         public static long GetUserId(string username)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            var tableAdapter = new UserTableAdapter();
+            var dataTable = tableAdapter.GetUserId(username);
+            foreach (var row in dataTable)
+            {
+                return row.UserId;
+                
+            }
+            return -1;
+            /*using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 var questionCmd = new SqlCommand("SELECT UserId FROM [User] WHERE Name = @username",
@@ -362,12 +422,20 @@ namespace DataAccess
                     return (long) reader["UserId"];
                 }
                 return -1;
-            }
+            }*/
         }
 
         public static long GetUserId(long quizId)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            var tableAdapter = new QuizTableAdapter();
+            var dataTable = tableAdapter.GetUserId(quizId);
+            foreach (var row in dataTable)
+            {
+                return row.UserId;
+
+            }
+            return -1;
+            /*using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 var questionCmd = new SqlCommand("SELECT UserId FROM [Quiz] WHERE QuizId = @quizid",
@@ -380,19 +448,9 @@ namespace DataAccess
                     return (long) reader["UserId"];
                 }
                 return -1;
-            }
+            }*/
         }
 
-        public static void IncrementGameScore(long gameId)
-        {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                var cmd = new SqlCommand("UPDATE Game SET Score = Score + 1 WHERE GameId = @GameId", connection);
-                cmd.Parameters.Add("@GameId", SqlDbType.BigInt).Value = gameId;
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
-            }
-        }
+        
     }
 }
