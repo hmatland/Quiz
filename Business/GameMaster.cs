@@ -79,9 +79,9 @@ namespace Business
             DataAccessMachine.AddNewQuizToDb(quiz);
         }
 
-        public static void SaveGame(Game game)
+        public static long? SaveGame(Game game)
         {
-            DataAccessMachine.SaveGameToDb(game);
+            return DataAccessMachine.SaveGameToDb(game);
         }
 
         public static List<Game> GetHighScoreList(long quizId)
@@ -120,6 +120,11 @@ namespace Business
                 question.Answers = DataAccessMachine.GetListOfAnswers(question.Id);
             }
             return questionsWithAnswers;
+        }
+
+        public static void UpdateGame(Game game)
+        {
+            DataAccessMachine.UpdateGame(game);
         }
     }
 }

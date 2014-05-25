@@ -27,17 +27,7 @@
             <asp:Button ID="Quit" runat="server" CssClass="quitButton" Text="Quit" OnClick ="Quit_Quiz"/>
             </div>
                         
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="GameDataSource" CssClass="Grid" PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt" Width="700px">
-                <Columns>
-                    <asp:BoundField DataField="UserName" HeaderText="Username" SortExpression="UserName" />
-                    <asp:BoundField DataField="Score" HeaderText="Score" SortExpression="Score" />
-                </Columns>
-            </asp:GridView>
-            <asp:ObjectDataSource ID="GameDataSource" runat="server" SelectMethod="GetHighScoreList" TypeName="Business.GameMaster">
-                <SelectParameters>
-                    <asp:QueryStringParameter Name="quizId" QueryStringField="quizId" Type="Int64" />
-                </SelectParameters>
-            </asp:ObjectDataSource>                        
+                                    
         </form>
     </body>
 </html>

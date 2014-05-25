@@ -180,11 +180,14 @@ namespace DataAccess
             {
                 var game = new Game
                 {
-                    UserId = row.UserId,
                     QuizId = row.QuizId,
                     Score = row.Score,
                     Id = gameId
                 };
+                if (row.IsUserIdNull())
+                    game.UserId = null;
+                else
+                    game.UserId = row.UserId;
                 return game;
             }
             return null;
@@ -451,6 +454,11 @@ namespace DataAccess
             }*/
         }
 
-        
+
+        public static void UpdateGame(Game game)
+        {
+            var tableAdapter = new GameTableAdapter();
+            tableAdapter.Update(game.UserId, game.Score,game.QuizId,game.Id);
+        }
     }
 }

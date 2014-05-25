@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI.WebControls;
 using Business;
 using DataObject;
@@ -118,7 +119,7 @@ namespace Presentation
             Answer3.Visible = false;
             Answer4.Visible = false;
             GameOver.Visible = true;
-            GameOver.Text = "All questions are answered. Your score is: " + _game.Score+"\n Press this button to save to highscore";
+            GameOver.Text = "All questions are answered. Your score is: " + _game.Score+"\n Press this button to see how you did compared to the highscorelist!\n (Requires log in)";
         }
 
         protected void Quit_Quiz(object sender, EventArgs e)
@@ -128,16 +129,9 @@ namespace Presentation
 
         protected void SaveGame(object sender, EventArgs e)
         {
-            if (HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                _game.UserId = GameMaster.GetUserId(HttpContext.Current.User.Identity.Name);
-                GameMaster.SaveGame(_game);
-                Response.Redirect("default.aspx");
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
+            
+            var id = GameMaster.SaveGame(_game);
+            Response.Redirect("/MemberPages/Highscore.aspx?gameId="+id+"&quizId="+_game.QuizId);
         }
 
     }
