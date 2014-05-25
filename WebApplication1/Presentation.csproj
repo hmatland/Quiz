@@ -63,7 +63,6 @@
     <Content Include="MemberPages\EditQuizForm.aspx" />
     <Content Include="MemberPages\AddQuizForm.aspx" />
     <Content Include="MemberPages\ChangePassword.aspx" />
-    <Content Include="MemberPages\DeleteQuestion.aspx" />
     <Content Include="MemberPages\HighScore.aspx" />
     <Content Include="Stylesheets\QuizStylesheet.css" />
     <Content Include="TakeQuiz.aspx" />
@@ -114,13 +113,6 @@
     </Compile>
     <Compile Include="MemberPages\ChangePassword.aspx.designer.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="MemberPages\DeleteQuestion.aspx.cs">
-      <DependentUpon>DeleteQuestion.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MemberPages\DeleteQuestion.aspx.designer.cs">
-      <DependentUpon>DeleteQuestion.aspx</DependentUpon>
     </Compile>
     <Compile Include="MemberPages\HighScore.aspx.cs">
       <DependentUpon>HighScore.aspx</DependentUpon>
