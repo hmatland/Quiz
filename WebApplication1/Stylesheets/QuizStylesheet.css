@@ -145,6 +145,8 @@
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #810e05;
+    margin-left:auto;
+    margin-right:auto;
 }
 .quitButton:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537) );
@@ -162,3 +164,42 @@
     right:0px;
     width:5%;
 }
+#loginDiv{
+    width: 710px;
+    margin-left: auto;
+    margin-right:auto;
+    height: 80%;   
+    }
+#loginBack{
+    margin-left: auto;
+    margin-right:auto; 
+    }
+#loginPageDiv{
+    margin-left: auto;
+    margin-right:auto; 
+    }
+#registerDiv{
+    margin-left: auto;
+    margin-right:auto;
+    width: 275px;
+}
+
+#changePasswordDiv{
+    margin-left: auto;
+    margin-right:auto;
+    width: 333px;
+}
+
+#backbuttonDiv{
+    margin-left: auto;
+    margin-right:auto;
+    width: 100px;
+}
+
+#newQuestionDiv{
+    margin-left: auto;
+    margin-right:auto;
+    width: 100px;
+}
+
+

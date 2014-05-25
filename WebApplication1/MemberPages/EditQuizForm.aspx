@@ -10,18 +10,15 @@
 <body>
     <form id="AddQuestionWithAnswersForm" runat="server">
     <div>
-        <h1>Welcome <asp:LoginName ID="LoginName1" runat="server" />.</h1>
+        <div id="newQuestionDiv"><h1>Welcome <asp:LoginName ID="LoginName1" runat="server" />.</h1>
         <p>
             You are adding a question to: <asp:Label ID="QuizName" runat="server" Text="Label"></asp:Label>
         </p><br />
         <asp:Label ID="QuestionLabel" runat="server" Text="Enter question: "></asp:Label>
-        <asp:TextBox ID="QuestionTextBox" runat="server" Width="373px"></asp:TextBox>
-        <br />
-        <!--<asp:Label ID="QuizDropDownListLabel" runat="server" Text="Add question to which quiz "></asp:Label><asp:DropDownList ID="QuizDropDownList" runat="server" DataTextField="Quizname" DataValueField="Id">
-        </asp:DropDownList>-->
+        <asp:TextBox ID="QuestionTextBox" runat="server" Width="354px"></asp:TextBox>
         <br />
         <asp:Label ID="AnswerLabel1" runat="server" Text="Correct Answer:"></asp:Label>
-        <asp:TextBox ID="CorrectTextBox" runat="server" Width="361px"></asp:TextBox>
+        <asp:TextBox ID="CorrectTextBox" runat="server" Width="355px"></asp:TextBox>
         <br />
         <asp:Label ID="AnswerLabel2" runat="server" Text="Wrong answer 1:"></asp:Label>
         <asp:TextBox ID="WrongTextBox1" runat="server" Width="355px"></asp:TextBox>
@@ -31,20 +28,18 @@
         <br />
         <asp:Label ID="AnswerLabel4" runat="server" Text="Wrong answer 3:"></asp:Label>
         <asp:TextBox ID="WrongTextBox3" runat="server" Width="353px"></asp:TextBox>
-    
         <br />
         <asp:Button ID="SubmitButton" CssClass="mainMenuButton" runat="server" Text="Add question with answers to DB" Width="319px" OnClick="SubmitQuestionWithAnswers" />
-    
+        </div>
         <br />
         <br />
         <br />
         <br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSourceQuestions" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowDataBound="GridView1_RowDataBound" CssClass="Grid" PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt">
+<AlternatingRowStyle CssClass="alt"></AlternatingRowStyle>
             <Columns>
                 <asp:CommandField ShowDeleteButton="True" />
-                <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" />
                 <asp:BoundField DataField="QuestionText" HeaderText="QuestionText" SortExpression="QuestionText" />
-                <asp:BoundField DataField="QuizId" HeaderText="QuizId" SortExpression="QuizId" />
                 <asp:TemplateField HeaderText="Answers">
                     <ItemTemplate>
                         <!--<%# Container.DataItem.ToString() %>-->
@@ -53,6 +48,8 @@
                     </ItemTemplate>
                 </asp:TemplateField>                
             </Columns>
+
+<PagerStyle CssClass="pgr"></PagerStyle>
         </asp:GridView>
         <asp:ObjectDataSource ID="ObjectDataSourceQuestions" runat="server" DeleteMethod="DeleteQuestionWithAnswersFromDb" SelectMethod="GetQuestionWithAnswers" TypeName="Business.GameMaster" InsertMethod="AddQuestionWithAnswers">
             <DeleteParameters>
@@ -67,9 +64,8 @@
             </SelectParameters>
         </asp:ObjectDataSource>    
         <br />
-        <asp:Button ID="Back" runat="server" CssClass= "quitButton" OnClick="Back_Click" Text="Back" />
+        <div id="backbuttonDiv"><asp:Button ID="Back" runat="server" CssClass= "quitButton" OnClick="Back_Click" Text="Back" /></div>
         <br />
-    
     </div>
     </form>
 </body>

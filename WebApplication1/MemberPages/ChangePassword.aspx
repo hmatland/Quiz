@@ -9,14 +9,12 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-    
+    <div id="changePasswordDiv">
         <h1>Change Password</h1>
         <p>
             <asp:ChangePassword ID="ChangePassword1" runat="server" ContinueDestinationPageUrl="~/default.aspx">
             </asp:ChangePassword>
         </p>
-    
     </div>
     </form>
 </body>
