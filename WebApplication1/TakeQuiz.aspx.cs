@@ -95,7 +95,6 @@ namespace Presentation
             if (isCorrect)
                 _game.Score += 1;
            
-            Information.Text = "The answer: " + ((Button)sender).Text + " is: " + isCorrect;
             var questionWithAnswers = GameMaster.GetNextQuestionWithAnswers(_game.QuizId, _questionId);
             ViewState.Add("game", _game);
             if (questionWithAnswers == null)
